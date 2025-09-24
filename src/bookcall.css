@@ -1,0 +1,90 @@
+
+
+body {
+  background: linear-gradient(
+    135deg,
+    rgb(219, 234, 254) 0%,
+    rgb(224, 231, 255) 25%,
+    rgb(199, 210, 254) 50%,
+    rgb(165, 180, 252) 75%,
+    rgb(139, 92, 246) 100%
+  );
+}
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}
+
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%) scaleX(0);
+  }
+  50% {
+    transform: translateX(0%) scaleX(1);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0);
+  }
+}
+
+.animate-wave {
+  animation: wave 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse-green {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse {
+  animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+  }
+  25% {
+    width: 25%;
+  }
+  50% {
+    width: 50%;
+  }
+  75% {
+    width: 75%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progress-fill 3s ease-out forwards;
+}
+
+@keyframes glow-green {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.8), 0 0 30px rgba(34, 197, 94, 0.6);
+  }
+}
+
+.animate-glow {
+  animation: glow-green 2s ease-in-out infinite;
+}
