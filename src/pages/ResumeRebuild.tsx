@@ -404,9 +404,9 @@ const ResumeRebuild = () => {
             </div>
 
             <div className="text-center">
-              <CalendarCTA label="Schedule Your Consultation" />
+              <CalendarCTA label="Request a Callback" />
               <p className="text-gray-400 mt-3 sm:mt-4 text-sm">
-                Free consultation • No commitment required
+                Request a callback
               </p>
             </div>
           </div>
@@ -422,7 +422,7 @@ const ResumeRebuild = () => {
           <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
             Let's work together to create a resume that opens doors and accelerates your career growth.
           </p>
-          <CalendarCTA label="Book Your Free Consultation" />
+          <CalendarCTA label="Request a callback" />
         </div>
       </div>
     </div>
