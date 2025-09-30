@@ -45,7 +45,7 @@ const timelineData: TimelineItem[] = [
   {
     id: 'week4',
     week: 4,
-    title: 'Cheat Sheet & Interview Prep',
+    title: 'Cheat Sheet & Prep',
     description: 'Access cheat sheets and get a complete mock interview plan.',
     icon: '04',
     isCompleted: false,
