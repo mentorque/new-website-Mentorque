@@ -1,22 +1,6 @@
-import { Briefcase, CheckCircle, Star, Clock, Target, Code, Globe, Palette } from 'lucide-react';
+import { CheckCircle, Star, Clock, Target, Code, Globe, Palette, FileText, Sparkles, Mail, Users } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
-
-const CompletionBadge = ({ serviceId }) => (
-  <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
-    <span className="text-green-400 text-sm font-medium">✓</span>
-  </div>
-);
-
-const Navbar = () => (
-  <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-md border-b border-white/10 z-50">
-    <div className="max-w-7xl mx-auto px-4 py-4">
-      <div className="flex justify-between items-center">
-        <div className="text-white text-xl font-bold">Portfolio</div>
-        <button className="text-white px-4 py-2">Menu</button>
-      </div>
-    </div>
-  </nav>
-);
+import Navbar from '@/components/Navbar';
 
 const CalendarCTA = ({ label }) => (
   <button className="group relative bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:from-blue-400 hover:to-blue-500 hover:shadow-2xl hover:shadow-blue-400/20 hover:-translate-y-1 backdrop-blur-sm">
@@ -40,14 +24,47 @@ const CalendarCTA = ({ label }) => (
 const PortfolioTemplates = () => {
   const [animatedCards, setAnimatedCards] = useState(new Set());
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [animatedAICards, setAnimatedAICards] = useState(new Set());
+  const [hasAnimatedAI, setHasAnimatedAI] = useState(false);
   const containerRef = useRef(null);
+  const aiToolsRef = useRef(null);
   
-  // Swipable cards state
+  // Swipable cards state for Portfolio Features
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
+
+  // Swipable cards state for AI Tools
+  const [currentAICardIndex, setCurrentAICardIndex] = useState(0);
+  const [aiTouchStart, setAITouchStart] = useState(0);
+  const [aiTouchEnd, setAITouchEnd] = useState(0);
+  const [isAIDragging, setIsAIDragging] = useState(false);
+  const [aiDragOffset, setAIDragOffset] = useState(0);
+
+  const aiToolFeatures = [
+    {
+      title: "Keyword Analysis",
+      description: "Analyze job descriptions and optimize your resume with AI-powered keyword matching",
+      icon: <Target className="w-8 h-8" />
+    },
+    {
+      title: "Experience Enhancement",
+      description: "Transform your experience into compelling, quantified achievements",
+      icon: <Sparkles className="w-8 h-8" />
+    },
+    {
+      title: "Cover Letter Generator",
+      description: "Create personalized cover letters tailored to each job application",
+      icon: <Mail className="w-8 h-8" />
+    },
+    {
+      title: "HR Contact Finder",
+      description: "Find and connect with HR professionals and hiring managers instantly",
+      icon: <Users className="w-8 h-8" />
+    }
+  ];
 
   const portfolioFeatures = [
     {
@@ -89,7 +106,7 @@ const PortfolioTemplates = () => {
     ]
   };
 
-  const aiToolFeatures = [
+  const aiToolPackageFeatures = [
     "Keywords extraction",
     "Experience analysis",
     "HR lookup",
@@ -100,7 +117,7 @@ const PortfolioTemplates = () => {
     "Cover Letter Generation"
   ];
 
-  // Improved swipe handlers
+  // Portfolio Features swipe handlers
   const minSwipeDistance = 50;
 
   const handleTouchStart = (e) => {
@@ -138,6 +155,42 @@ const PortfolioTemplates = () => {
     setCurrentCardIndex(index);
   };
 
+  // AI Tools swipe handlers
+  const handleAITouchStart = (e) => {
+    setAITouchStart(e.targetTouches[0].clientX);
+    setIsAIDragging(true);
+    setAIDragOffset(0);
+  };
+
+  const handleAITouchMove = (e) => {
+    if (!isAIDragging) return;
+    const currentTouch = e.targetTouches[0].clientX;
+    const offset = currentTouch - aiTouchStart;
+    setAIDragOffset(offset);
+    setAITouchEnd(currentTouch);
+  };
+
+  const handleAITouchEnd = () => {
+    if (!isAIDragging) return;
+    
+    const distance = aiTouchStart - aiTouchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && currentAICardIndex < aiToolFeatures.length - 1) {
+      setCurrentAICardIndex(prev => prev + 1);
+    } else if (isRightSwipe && currentAICardIndex > 0) {
+      setCurrentAICardIndex(prev => prev - 1);
+    }
+    
+    setIsAIDragging(false);
+    setAIDragOffset(0);
+  };
+
+  const goToAICard = (index) => {
+    setCurrentAICardIndex(index);
+  };
+
   // Prevent zoom and improve mobile experience
   useEffect(() => {
     const preventZoom = (e) => {
@@ -152,14 +205,12 @@ const PortfolioTemplates = () => {
       }
     };
 
-    // Add event listeners to prevent zoom
     document.addEventListener('touchstart', preventZoom, { passive: false });
     document.addEventListener('touchmove', preventDoubleTapZoom, { passive: false });
     document.addEventListener('gesturestart', (e) => e.preventDefault());
     document.addEventListener('gesturechange', (e) => e.preventDefault());
     document.addEventListener('gestureend', (e) => e.preventDefault());
 
-    // Prevent double-tap zoom
     let lastTouchEnd = 0;
     const handleTouchEnd = (e) => {
       const now = Date.now();
@@ -181,6 +232,7 @@ const PortfolioTemplates = () => {
     };
   }, []);
 
+  // Animation observer for Portfolio Features
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -217,9 +269,45 @@ const PortfolioTemplates = () => {
     };
   }, [hasAnimated, portfolioFeatures.length]);
 
+  // Animation observer for AI Tools
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimatedAI) {
+            setHasAnimatedAI(true);
+            
+            aiToolFeatures.forEach((_, index) => {
+              setTimeout(() => {
+                setAnimatedAICards(prev => new Set(prev).add(index));
+              }, index * 600);
+            });
+
+            setTimeout(() => {
+              setAnimatedAICards(new Set());
+            }, aiToolFeatures.length * 600 + 3000);
+          }
+        });
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
+      }
+    );
+
+    if (aiToolsRef.current) {
+      observer.observe(aiToolsRef.current);
+    }
+
+    return () => {
+      if (aiToolsRef.current) {
+        observer.unobserve(aiToolsRef.current);
+      }
+    };
+  }, [hasAnimatedAI, aiToolFeatures.length]);
+
   return (
     <div className="min-h-screen bg-black overflow-x-hidden">
-      {/* Add CSS to prevent zoom */}
       <style jsx global>{`
         @media (max-width: 768px) {
           html, body {
@@ -230,7 +318,6 @@ const PortfolioTemplates = () => {
             user-scalable: no;
           }
           
-          /* Prevent text size adjustment */
           * {
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
@@ -243,28 +330,142 @@ const PortfolioTemplates = () => {
       {/* Hero Section */}
       <div className="bg-black py-8 md:py-12 px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <h1 className="text-3xl sm:text-4xl md:text-6xl mt-16 sm:mt-20 text-white leading-tight">
-                Portfolio <span className="text-blue-400">Development</span>
-              </h1>
-            </div>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-100 leading-relaxed max-w-2xl mx-auto mb-6 sm:mb-8 px-2">
-              Build a stunning portfolio that showcases your skills and projects
+        
+        </div>
+      </div>
+
+      {/* AI-Powered Job Application Tools Section */}
+      <div className="bg-black py-8 md:py-12 px-4 sm:px-6 md:px-8 lg:px-12" ref={aiToolsRef}>
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl text-white leading-tight mb-6 sm:mb-8">
+              AI-Powered <span className="text-purple-400">Job Application Tools</span>
+            </h2>
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-100 leading-relaxed max-w-2xl mx-auto px-4">
+              Intelligent features to streamline your job search
             </p>
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-base sm:text-lg">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
-                <span className="text-gray-100 text-sm sm:text-base">Custom Design</span>
+          </div>
+
+          {/* Desktop View - Grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {aiToolFeatures.map((feature, index) => (
+              <div 
+                key={index} 
+                className={`relative group backdrop-blur-xl bg-white/[0.02] border border-white/10 rounded-2xl p-6 lg:p-8 text-center transition-all duration-500 before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-white/[0.08] before:via-transparent before:to-transparent before:transition-opacity before:duration-500 ${
+                  animatedAICards.has(index) 
+                    ? 'bg-white/[0.05] border-white/20 shadow-2xl shadow-purple-400/10 before:opacity-100' 
+                    : 'hover:bg-white/[0.05] hover:border-white/20 hover:shadow-2xl hover:shadow-purple-400/10 before:opacity-0 hover:before:opacity-100'
+                }`}
+              >
+                <div className="relative z-10">
+                  <div className="text-purple-400 mb-4 lg:mb-6 flex justify-center drop-shadow-lg">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl lg:text-2xl text-white mb-3 lg:mb-4 drop-shadow-sm">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-300 text-base lg:text-lg leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+                <div 
+                  className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-400/[0.03] via-transparent to-blue-600/[0.02] transition-opacity duration-500 ${
+                    animatedAICards.has(index) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                  }`}
+                ></div>
               </div>
-              <div className="flex items-center gap-2">
-                <Star className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
-                <span className="text-gray-100 text-sm sm:text-base">Professional Hosting</span>
+            ))}
+          </div>
+
+          {/* Mobile View - Swipable Cards */}
+          <div className="md:hidden relative w-full" style={{ height: '75vh', minHeight: '500px', maxHeight: '650px' }}>
+            <div 
+              className="relative w-full h-full flex items-center justify-center touch-pan-y"
+              onTouchStart={handleAITouchStart}
+              onTouchMove={handleAITouchMove}
+              onTouchEnd={handleAITouchEnd}
+              style={{ touchAction: 'pan-y' }}
+            >
+              <div className="relative w-full h-full max-w-sm mx-auto flex items-center justify-center">
+                {aiToolFeatures.map((feature, index) => {
+                  const position = index - currentAICardIndex;
+                  const isActive = index === currentAICardIndex;
+                  const isPrev = index === currentAICardIndex - 1;
+                  const isNext = index === currentAICardIndex + 1;
+                  
+                  let transform = 'translateX(0%) scale(1)';
+                  let opacity = 0;
+                  let zIndex = 0;
+                  
+                  if (isActive) {
+                    transform = `translateX(${aiDragOffset}px) scale(1)`;
+                    opacity = 1;
+                    zIndex = 30;
+                  } else if (isPrev) {
+                    transform = `translateX(calc(-100% + ${aiDragOffset}px)) scale(0.9)`;
+                    opacity = 0.7 - Math.min(Math.abs(aiDragOffset) / 1000, 0.5);
+                    zIndex = 20;
+                  } else if (isNext) {
+                    transform = `translateX(calc(100% + ${aiDragOffset}px)) scale(0.9)`;
+                    opacity = 0.7 - Math.min(Math.abs(aiDragOffset) / 1000, 0.5);
+                    zIndex = 20;
+                  } else if (position < -1 || position > 1) {
+                    opacity = 0;
+                    zIndex = 0;
+                  }
+
+                  return (
+                    <div
+                      key={index}
+                      className="absolute w-11/12 h-4/5 max-w-xs transition-all duration-300 ease-out"
+                      style={{
+                        transform,
+                        opacity,
+                        zIndex,
+                        pointerEvents: isActive ? 'auto' : 'none',
+                      }}
+                    >
+                      <div className="relative w-full h-full backdrop-blur-xl bg-white/[0.06] border-2 border-white/25 rounded-3xl p-6 shadow-2xl shadow-purple-400/20 flex flex-col justify-center items-center text-center">
+                        <div className="relative z-10 flex flex-col items-center justify-center h-full">
+                          <div className="text-purple-400 mb-6 drop-shadow-2xl">
+                            {React.cloneElement(feature.icon, { className: 'w-14 h-14' })}
+                          </div>
+                          <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-lg px-2">
+                            {feature.title}
+                          </h3>
+                          <p className="text-gray-200 text-lg leading-relaxed px-4">
+                            {feature.description}
+                          </p>
+                        </div>
+                        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-400/[0.08] via-transparent to-blue-600/[0.05]"></div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
-                <span className="text-gray-100 text-sm sm:text-base">Fast Delivery</span>
+
+              {/* Card Indicators */}
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-40">
+                {aiToolFeatures.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToAICard(index)}
+                    className={`transition-all duration-300 rounded-full ${
+                      index === currentAICardIndex 
+                        ? 'w-6 h-2 bg-purple-400' 
+                        : 'w-2 h-2 bg-white/40'
+                    }`}
+                    aria-label={`Go to AI tool card ${index + 1}`}
+                  />
+                ))}
               </div>
+
+              {/* Swipe Hint */}
+              {currentAICardIndex === 0 && aiDragOffset === 0 && (
+                <div className="absolute -bottom-8 left-0 right-0 text-center z-30">
+                  <p className="text-gray-400 text-sm animate-pulse">Swipe to explore →</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -275,10 +476,10 @@ const PortfolioTemplates = () => {
         <div className="w-full max-w-7xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl md:text-6xl text-white leading-tight mb-6 sm:mb-8">
-              What We <span className="text-blue-400">Include</span>
+              Portfolio <span className="text-blue-400">Development</span>
             </h2>
             <p className="text-lg sm:text-xl md:text-2xl text-gray-100 leading-relaxed max-w-2xl mx-auto px-4">
-              Everything you need for a professional online presence
+              Build a stunning portfolio that showcases your skills and projects
             </p>
           </div>
 
@@ -313,7 +514,7 @@ const PortfolioTemplates = () => {
             ))}
           </div>
 
-          {/* Mobile View - Improved Swipable Cards */}
+          {/* Mobile View - Swipable Cards */}
           <div className="md:hidden relative w-full" style={{ height: '75vh', minHeight: '500px', maxHeight: '650px' }}>
             <div 
               className="relative w-full h-full flex items-center justify-center touch-pan-y"
@@ -469,7 +670,7 @@ const PortfolioTemplates = () => {
                   </p>
 
                   <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8 flex-grow">
-                    {aiToolFeatures.map((feature, index) => (
+                    {aiToolPackageFeatures.map((feature, index) => (
                       <div key={index} className="flex items-start gap-3 sm:gap-4">
                         <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400 flex-shrink-0 mt-1 drop-shadow-lg" />
                         <span className="text-gray-100 text-base sm:text-lg leading-relaxed">{feature}</span>

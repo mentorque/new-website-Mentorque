@@ -1,16 +1,7 @@
 import { MessageSquare, Users, FileText, Star, CheckCircle, Clock, Target, Zap, Award, Calendar } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 
-const Navbar = () => (
-  <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-md border-b border-white/10 z-50">
-    <div className="max-w-7xl mx-auto px-4 py-4">
-      <div className="flex justify-between items-center">
-        <div className="text-white text-xl font-bold">Mock Interviews</div>
-        <button className="text-white px-4 py-2">Menu</button>
-      </div>
-    </div>
-  </nav>
-);
+import Navbar from '@/components/Navbar';
 
 const CalendarCTA = ({ label }) => (
   <button className="group relative bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:from-blue-400 hover:to-blue-500 hover:shadow-2xl hover:shadow-blue-400/20 hover:-translate-y-1 backdrop-blur-sm">
@@ -71,7 +62,6 @@ const MockInterview = () => {
       week: 5,
       title: "Elevator Pitch",
       subtitle: "Perfect Your 30-Second Introduction",
-      duration: "30 minutes",
       difficulty: "Beginner",
       icon: <MessageSquare className="w-8 h-8" />,
       description:
@@ -93,7 +83,6 @@ const MockInterview = () => {
       week: 6,
       title: "Competency Interview",
       subtitle: "Master the STAR Method",
-      duration: "45 minutes",
       difficulty: "Intermediate",
       icon: <Users className="w-8 h-8" />,
       description:
@@ -115,7 +104,6 @@ const MockInterview = () => {
       week: 7,
       title: "Technical Interview",
       subtitle: "Coding Challenges & Problem Solving",
-      duration: "60 minutes",
       difficulty: "Advanced",
       icon: <FileText className="w-8 h-8" />,
       description:
@@ -137,7 +125,6 @@ const MockInterview = () => {
       week: 8,
       title: "Final Behavioral Round",
       subtitle: "Executive-Level Assessment",
-      duration: "45 minutes",
       difficulty: "Expert",
       icon: <Star className="w-8 h-8" />,
       description:
@@ -287,8 +274,8 @@ const MockInterview = () => {
           }
         }
       `}</style>
-
-      <Navbar />
+       <Navbar />
+  
 
       {/* Hero Section */}
       <div className="bg-black py-8 md:py-12 px-4 sm:px-6 md:px-8 lg:px-12">
@@ -486,15 +473,7 @@ const MockInterview = () => {
                       <p className="text-gray-300 text-base sm:text-lg">{week.subtitle}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 mb-4 sm:mb-6 text-gray-300 text-base sm:text-lg">
-                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
-                    <span>{week.duration}</span>
-                    <span>•</span>
-                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-400/10 text-blue-400">
-                      {week.difficulty}
-                    </span>
-                  </div>
-                  <div className="mb-4 sm:mb-6 text-blue-400">{week.icon}</div>
+               
                 </div>
 
                 {/* Right Side */}

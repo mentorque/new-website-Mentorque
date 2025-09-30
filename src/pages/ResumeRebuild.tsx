@@ -403,12 +403,7 @@ const ResumeRebuild = () => {
               ))}
             </div>
 
-            <div className="text-center">
-              <CalendarCTA label="Request a Callback" />
-              <p className="text-gray-400 mt-3 sm:mt-4 text-sm">
-                Request a callback
-              </p>
-            </div>
+        
           </div>
         </div>
       </div>

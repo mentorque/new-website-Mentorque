@@ -45,7 +45,7 @@ const timelineData: TimelineItem[] = [
   {
     id: 'week4',
     week: 4,
-    title: 'Cheat Sheet & Mock Interview',
+    title: 'Cheat Sheet & Interview Prep',
     description: 'Access cheat sheets and get a complete mock interview plan.',
     icon: '04',
     isCompleted: false,
@@ -218,7 +218,7 @@ const TimelineCard: React.FC<{
 
           {/* Title */}
           <Link to={item.path}>
-  <h3 className="text-xs md:text-4xl font-bold text-blue-400 mb-1 md:mb-4 text-right whitespace-nowrap flex items-center gap-1 md:gap-2 justify-end mr-1 md:mr-0">
+  <h3 className="text-xs md:text-2xl font-bold text-blue-400 mb-1 md:mb-4 text-right whitespace-nowrap flex items-center gap-1 md:gap-2 justify-end mr-1 md:mr-0">
     {item.title}
     <motion.span
       initial={{ scale: 1.6, opacity: 0.7 }}
@@ -270,7 +270,7 @@ const TimelineCard: React.FC<{
           </div>
 
           <Link to={item.path}>
-  <h3 className="text-xs md:text-4xl font-bold text-blue-400 mb-1 md:mb-4 text-left whitespace-nowrap flex items-center gap-1 md:gap-2 justify-start ml-1 md:ml-0">
+  <h3 className="text-xs md:text-2xl font-bold text-blue-400 mb-1 md:mb-4 text-left whitespace-nowrap flex items-center gap-1 md:gap-2 justify-start ml-1 md:ml-0">
     <motion.span
       initial={{ scale: 1.6, opacity: 0.7 }}
       animate={{ scale: [1.6, 1.15, 1.6], opacity: [0.7, 1, 0.7] }}
