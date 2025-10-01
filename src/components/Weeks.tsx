@@ -30,6 +30,7 @@ function ResponsiveImage({ src, alt, className, priority = false, ...props }) {
     </div>
   )
 }
+
 function ResponsiveVideo({ src, thumbnail, className, isActive, priority = false, ...props }) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
@@ -37,149 +38,174 @@ function ResponsiveVideo({ src, thumbnail, className, isActive, priority = false
   const [showThumbnail, setShowThumbnail] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const playAttemptRef = useRef(false)
 
-  // Reset video state when section becomes active/inactive
+  // Reset video state when section changes
   useEffect(() => {
     const video = videoRef.current
-    if (video) {
-      if (isActive) {
-        // When this section becomes active, ensure we show thumbnail
-        setShowThumbnail(true)
-        setIsPlaying(false)
-        setIsLoading(false)
-        video.currentTime = 0
-      } else {
-        // When leaving this section, pause and reset
-        video.pause()
-        setIsPlaying(false)
-        setIsLoading(false)
-      }
-    }
-  }, [isActive])
+    if (!video) return
 
-  // Additional effect to handle when scrolling from one video to another
-  useEffect(() => {
-    const video = videoRef.current
-    if (video && isActive) {
-      // Always show thumbnail when this video becomes active
-      setShowThumbnail(true)
-      setIsPlaying(false)
+    if (!isActive) {
+      // When leaving this section, reset everything
       video.pause()
       video.currentTime = 0
+      setIsPlaying(false)
+      setIsLoading(false)
+      setShowThumbnail(true)
+      playAttemptRef.current = false
+    } else {
+      // When becoming active, ensure we start fresh
+      video.pause()
+      video.currentTime = 0
+      setIsPlaying(false)
+      setIsLoading(false)
+      setShowThumbnail(true)
+      playAttemptRef.current = false
     }
-  }, [isActive, src]) // Added src dependency to reset when video source changes
+  }, [isActive, src])
 
-  // Preload video when component mounts
+  // Preload video
   useEffect(() => {
     const video = videoRef.current
     if (video && src) {
-      const handleLoad = () => {
+      video.load()
+      
+      const handleLoadedData = () => {
         setIsLoaded(true)
+        setHasError(false)
       }
       
       const handleError = (e) => {
         console.error("Video loading error:", src, e)
         setHasError(true)
-        setIsLoaded(true)
+        setIsLoaded(false)
         setIsLoading(false)
       }
 
-      video.preload = "metadata"
-      video.addEventListener("loadeddata", handleLoad)
+      video.addEventListener("loadeddata", handleLoadedData)
       video.addEventListener("error", handleError)
 
       return () => {
-        video.removeEventListener("loadeddata", handleLoad)
+        video.removeEventListener("loadeddata", handleLoadedData)
         video.removeEventListener("error", handleError)
       }
     }
   }, [src])
 
   const togglePlay = async () => {
-    if (!videoRef.current || !isLoaded) return
+    const video = videoRef.current
+    if (!video || playAttemptRef.current) return
     
     try {
       if (isPlaying) {
-        videoRef.current.pause()
+        video.pause()
         setIsPlaying(false)
+        playAttemptRef.current = false
       } else {
+        playAttemptRef.current = true
         setIsLoading(true)
         setShowThumbnail(false)
         
-        await new Promise(resolve => setTimeout(resolve, 100))
+        // Small delay to ensure thumbnail fade
+        await new Promise(resolve => setTimeout(resolve, 50))
         
-        const video = videoRef.current
-        video.playsInline = true
-        video.setAttribute('playsinline', 'true')
-        video.setAttribute('webkit-playsinline', 'true')
+        // Ensure video is ready
+        if (video.readyState < 3) {
+          await new Promise((resolve) => {
+            const checkReady = () => {
+              if (video.readyState >= 3) {
+                resolve(true)
+              } else {
+                setTimeout(checkReady, 50)
+              }
+            }
+            checkReady()
+          })
+        }
         
-        const playPromise = video.play()
-        
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              setIsPlaying(true)
-              setIsLoading(false)
-            })
-            .catch(error => {
-              console.error("Play failed:", error)
-              setIsLoading(false)
-              setShowThumbnail(true)
-            })
+        try {
+          await video.play()
+          setIsPlaying(true)
+          setIsLoading(false)
+        } catch (playError) {
+          console.error("Play failed:", playError)
+          setIsLoading(false)
+          setShowThumbnail(true)
+          setIsPlaying(false)
+          playAttemptRef.current = false
+          
+          // Show error to user
+          if (playError.name === 'NotAllowedError') {
+            console.log("Playback requires user interaction")
+          }
         }
       }
     } catch (error) {
-      console.error("Play error:", error)
+      console.error("Toggle play error:", error)
       setIsLoading(false)
       setShowThumbnail(true)
+      setIsPlaying(false)
+      playAttemptRef.current = false
     }
   }
 
   // Handle video events
   useEffect(() => {
     const video = videoRef.current
-    if (video) {
-      const handlePlay = () => {
-        setIsPlaying(true)
+    if (!video) return
+
+    const handlePlay = () => {
+      setIsPlaying(true)
+      setIsLoading(false)
+      playAttemptRef.current = false
+    }
+
+    const handlePause = () => {
+      setIsPlaying(false)
+      playAttemptRef.current = false
+    }
+
+    const handleEnded = () => {
+      setIsPlaying(false)
+      setShowThumbnail(true)
+      video.currentTime = 0
+      playAttemptRef.current = false
+    }
+
+    const handleWaiting = () => {
+      setIsLoading(true)
+    }
+
+    const handleCanPlay = () => {
+      if (isPlaying) {
         setIsLoading(false)
-      }
-
-      const handlePause = () => {
-        setIsPlaying(false)
-      }
-
-      const handleEnded = () => {
-        setIsPlaying(false)
-        setShowThumbnail(true)
-        video.currentTime = 0
-      }
-
-      const handleWaiting = () => {
-        setIsLoading(true)
-      }
-
-      const handleCanPlay = () => {
-        setIsLoading(false)
-      }
-
-      video.addEventListener("play", handlePlay)
-      video.addEventListener("pause", handlePause)
-      video.addEventListener("ended", handleEnded)
-      video.addEventListener("waiting", handleWaiting)
-      video.addEventListener("canplay", handleCanPlay)
-
-      return () => {
-        video.removeEventListener("play", handlePlay)
-        video.removeEventListener("pause", handlePause)
-        video.removeEventListener("ended", handleEnded)
-        video.removeEventListener("waiting", handleWaiting)
-        video.removeEventListener("canplay", handleCanPlay)
       }
     }
-  }, [])
+
+    const handleStalled = () => {
+      console.warn("Video stalled")
+      setIsLoading(true)
+    }
+
+    video.addEventListener("play", handlePlay)
+    video.addEventListener("pause", handlePause)
+    video.addEventListener("ended", handleEnded)
+    video.addEventListener("waiting", handleWaiting)
+    video.addEventListener("canplay", handleCanPlay)
+    video.addEventListener("stalled", handleStalled)
+
+    return () => {
+      video.removeEventListener("play", handlePlay)
+      video.removeEventListener("pause", handlePause)
+      video.removeEventListener("ended", handleEnded)
+      video.removeEventListener("waiting", handleWaiting)
+      video.removeEventListener("canplay", handleCanPlay)
+      video.removeEventListener("stalled", handleStalled)
+    }
+  }, [isPlaying])
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
+    <div className="relative w-full h-full flex items-center justify-center bg-black/20 rounded-2xl">
       {/* Thumbnail with play button */}
       {showThumbnail && thumbnail && (
         <div 
@@ -191,7 +217,7 @@ function ResponsiveVideo({ src, thumbnail, className, isActive, priority = false
             alt="Video thumbnail"
             className="w-full h-full object-contain rounded-2xl transition-transform duration-300 group-hover:scale-105"
             onError={(e) => {
-              e.target.style.display = 'none'
+              e.currentTarget.style.display = 'none'
             }}
           />
           <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-all duration-300 rounded-2xl flex items-center justify-center">
@@ -214,7 +240,17 @@ function ResponsiveVideo({ src, thumbnail, className, isActive, priority = false
 
       {/* Error state */}
       {hasError && (
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center w-full h-full bg-gray-800/50 rounded-2xl p-4">
+        <div 
+          className="absolute inset-0 z-30 flex flex-col items-center justify-center w-full h-full bg-gray-800/50 rounded-2xl p-4 cursor-pointer"
+          onClick={() => {
+            setHasError(false)
+            setIsLoaded(false)
+            const video = videoRef.current
+            if (video) {
+              video.load()
+            }
+          }}
+        >
           <p className="text-red-400 text-center mb-2 text-sm">Video could not be loaded</p>
           <p className="text-gray-400 text-center text-xs mb-4">Tap to retry</p>
           {thumbnail && (
@@ -233,20 +269,17 @@ function ResponsiveVideo({ src, thumbnail, className, isActive, priority = false
       }`}>
         <video
           ref={videoRef}
-          src={src}
           className={`w-full h-full object-contain rounded-2xl shadow-2xl ${
             className || ""
           }`}
           loop
           muted
           playsInline
-          preload="metadata"
-          webkit-playsinline="true"
-          x5-playsinline="true"
+          preload="auto"
+          crossOrigin="anonymous"
           {...props}
         >
           <source src={src} type="video/mp4" />
-          <source src={src.replace('.mp4', '.webm')} type="video/webm" />
           Your browser does not support the video tag.
         </video>
 
@@ -296,7 +329,7 @@ const scrollSections = [
     type: "video",
     title: "Mentorque AI",
     content: "Reads what you read. Sees what you see. Powered by Gemini 2.5-Flash that replaces all the tab switching and answers everything related to your job search.",
-    video: "./video1-1.webm",
+    video: "./video1-1.mp4",
     thumbnail: "./thumbnail1.png",
   },
   {
@@ -320,40 +353,7 @@ export default function Component() {
   const [currentSection, setCurrentSection] = useState(0)
   const [imageVisible, setImageVisible] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const [preloadedVideos, setPreloadedVideos] = useState(new Set())
   const containerRef = useRef<HTMLDivElement>(null)
-  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({})
-
-  // Preload videos when component mounts
-  useEffect(() => {
-    const videoSections = scrollSections.filter(section => section.type === "video")
-    
-    videoSections.forEach(section => {
-      if (!preloadedVideos.has(section.video)) {
-        const video = document.createElement('video')
-        video.src = section.video
-        video.preload = 'metadata'
-        video.setAttribute('playsinline', 'true')
-        video.setAttribute('webkit-playsinline', 'true')
-        video.setAttribute('muted', 'true')
-        
-        video.onloadeddata = () => {
-          setPreloadedVideos(prev => new Set(prev).add(section.video))
-        }
-      }
-    })
-  }, [preloadedVideos])
-
-  // Reset all videos when section changes
-  useEffect(() => {
-    // Pause all videos and reset their state
-    Object.values(videoRefs.current).forEach(video => {
-      if (video) {
-        video.pause()
-        video.currentTime = 0
-      }
-    })
-  }, [currentSection])
 
   useEffect(() => {
     const handleScroll = () => {
