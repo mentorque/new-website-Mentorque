@@ -11,8 +11,8 @@ import FierceImageCarousel from "@/components/whatsApp";
 import Resume from "@/components/resume"; 
 import ProgressiveTimeline from '@/components/ProgressiveTimeline.tsx'
 
-
 const Index = () => {
+  // Scroll animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -34,27 +34,37 @@ const Index = () => {
     };
   }, []);
 
+  // Smooth scrolling
   useEffect(() => {
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();
-
         const targetId = this.getAttribute("href")?.substring(1);
         if (!targetId) return;
-
         const targetElement = document.getElementById(targetId);
         if (!targetElement) return;
-
-        // Offset for navbar
         const offset = window.innerWidth < 768 ? 100 : 80;
-
-        window.scrollTo({
-          top: targetElement.offsetTop - offset,
-          behavior: "smooth",
-        });
+        window.scrollTo({ top: targetElement.offsetTop - offset, behavior: "smooth" });
       });
     });
+  }, []);
+
+  // **GA4 UTM tracking**
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const utm_source = params.get('utm_source');
+    const utm_medium = params.get('utm_medium');
+    const utm_campaign = params.get('utm_campaign');
+    const utm_content = params.get('utm_content');
+
+    if (utm_source && window.gtag) {
+      window.gtag('event', 'utm_params', {
+        source: utm_source,
+        medium: utm_medium,
+        campaign: utm_campaign,
+        content: utm_content,
+      });
+    }
   }, []);
 
   return (
@@ -74,10 +84,8 @@ const Index = () => {
           <About />
         </section>
 
-
-
-         <section id="ProgressiveTimeline">
-        <ProgressiveTimeline/>
+        <section id="ProgressiveTimeline">
+          <ProgressiveTimeline/>
         </section>
 
         <section id="services">
