@@ -75,25 +75,26 @@ const Index = () => {
           <Hero />
         </section>
 
-        <section id="Clients">
-          <LogoCarousel />
-          <FierceImageCarousel />
+         <section id="Testimonials">
+             <LogoCarousel />
+          <TestimonialCarousel />
         </section>
 
-        <section id="About">
-          <About />
+
+       
+
+            <section id="services">
+          <Component />
         </section>
+
 
         <section id="ProgressiveTimeline">
           <ProgressiveTimeline/>
         </section>
 
-        <section id="services">
-          <Component />
-        </section>
-
-        <section id="Testimonials">
-          <TestimonialCarousel />
+    
+        <section id="Clients">
+          <FierceImageCarousel />
         </section>
 
         <section id="FAQ">

@@ -88,7 +88,7 @@ const Navbar = () => {
           )}
         >
         <Link to="/#Home" className="flex items-center">
-  <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center mr-3">
+<div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center mr-3">
     <div className="w-5 h-5 bg-black rounded-sm"></div>
   </div>
   <span className={cn("font-bold text-xl transition-colors duration-500", colors.logoText)}>
