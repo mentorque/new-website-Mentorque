@@ -80,7 +80,9 @@ const Index = () => {
           <TestimonialCarousel />
         </section>
 
-
+ <section id="About">
+          <About />
+        </section>
        
 
             <section id="services">

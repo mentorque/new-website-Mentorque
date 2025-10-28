@@ -125,10 +125,10 @@ const TestimonialCarousel = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
           
-           <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 leading-tight">
-          People are Landing Interviews <span className="text-blue-400">Fast.</span>
-          <br />
-        </h1>
+           <h2 className="text-4xl md:text-5xl lg:text-6xl  text-white mb-6">
+           Are We Liked?
+           
+          </h2>
         
         </div>
 
