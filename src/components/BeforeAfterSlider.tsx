@@ -272,18 +272,20 @@ export default function BeforeAfterSlider({
     };
   }, []);
 
-  const handleSize = isMobile ? 'w-14 h-14' : 'w-12 h-12';
+  const handleSize = isMobile ? 'w-12 h-12' : 'w-12 h-12';
   const dynamicHandleScale = (isHovering || isDragging) ? 'scale-110' : isMobile ? 'scale-105' : '';
-  const interactionAreaWidth = isMobile ? '56px' : '48px';
+  const interactionAreaWidth = isMobile ? '50px' : '48px';
 
   return (
     <div
       ref={containerRef}
-      className={`relative rounded-2xl overflow-hidden shadow-2xl select-none touch-none w-full h-full ${className}`}
+      className={`relative rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl select-none touch-none ${className}`}
       style={{ 
         maxWidth: isMobile ? '100%' : `${width}px`,
-        aspectRatio: `${width}/${height}`,
-        minHeight: isMobile ? '400px' : 'auto',
+        width: isMobile ? '100%' : 'auto',
+        aspectRatio: isMobile ? '320/420' : `${width}/${height}`,
+        height: isMobile ? 'auto' : 'auto',
+        maxHeight: isMobile ? '420px' : 'none',
       }}
       onMouseEnter={() => !isMobile && setIsHovering(true)}
       onMouseLeave={() => !isMobile && setIsHovering(false)}

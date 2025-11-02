@@ -318,27 +318,29 @@ function ResponsiveVideo({ src, thumbnail, className, isActive, priority = false
 }
 
 const scrollSections = [
+ 
   {
     id: 0,
-    type: "resume",
-    title: "Resume Transformation",
-    content: "Resumes tailored by industry experts. Hyper-personalized to your goals. Proven to deliver tangible results fast.",
-  },
-  {
-    id: 1,
     type: "video",
     title: "Mentorque AI",
     content: "Reads what you read. Sees what you see. Powered by Gemini 2.5-Flash that replaces all the tab switching and answers everything related to your job search.",
     video: "./video1-1.mp4",
     thumbnail: "./thumbnail1.png",
   },
+
   {
-    id: 2,
+    id: 1,
     type: "video",
     title: "Track Your Progress",
     content: "With Mentorque dashboard, keep track of your progress, milestones, and growth effortlessly — all in one place.",
     video: "./video2-2.mp4",
     thumbnail: "./thumbnail2.png",
+  },
+  {
+    id: 2,
+    type: "resume",
+    title: "Crafted for success",
+    content: "Resumes tailored by industry experts. Hyper-personalized to your goals. Proven to deliver tangible results fast.",
   },
   {
     id: 3,
@@ -349,7 +351,7 @@ const scrollSections = [
   },
 ]
 
-export default function Component() {
+export default function Weeks() {
   const [currentSection, setCurrentSection] = useState(0)
   const [imageVisible, setImageVisible] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
@@ -370,8 +372,9 @@ export default function Component() {
           Math.min(1, (windowHeight * 0.5 - rect.top) / (windowHeight + rect.height * 0.5))
         )
 
-        const sectionIndex = Math.floor(progress * scrollSections.length)
-        const clampedIndex = Math.max(0, Math.min(scrollSections.length - 1, sectionIndex))
+  // Use rounding so intermediate progress lands on the intended section
+  const sectionIndex = Math.round(progress * (scrollSections.length - 1))
+  const clampedIndex = Math.max(0, Math.min(scrollSections.length - 1, sectionIndex))
 
         if (clampedIndex !== currentSection) {
           setIsTransitioning(true)
@@ -416,7 +419,7 @@ export default function Component() {
       <div ref={containerRef} className="relative" style={{ height: `${containerHeight}vh` }}>
         <div className="sticky top-0 flex items-center h-screen">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center justify-center">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-center justify-center">
               {/* Left media */}
               <div
                 className={`relative transition-all duration-1000 ease-out w-full ${
@@ -426,14 +429,14 @@ export default function Component() {
                 <div
                   className={`relative w-full ${
                     currentSectionData.type === "resume"
-                      ? "h-[450px] sm:h-[500px] lg:h-[500px] xl:h-[595px] flex items-center justify-center"
+                      ? "min-h-[280px] h-auto sm:h-[400px] md:h-[450px] lg:h-[500px] xl:h-[595px] flex items-center justify-center"
                       : isVideoSection
-                      ? "h-[400px] sm:h-[500px] lg:h-[600px] xl:h-[700px]"
-                      : "h-[350px] sm:h-[450px] lg:h-[500px] xl:h-[595px]"
+                      ? "h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px]"
+                      : "h-[250px] sm:h-[350px] md:h-[450px] lg:h-[500px] xl:h-[595px]"
                   }`}
                 >
                   {currentSectionData.type === "resume" && (
-                    <div className="w-full h-full lg:h-auto">
+                    <div className="w-full h-full max-w-md mx-auto lg:h-auto flex items-center justify-center">
                       <Resume />
                     </div>
                   )}
@@ -442,6 +445,7 @@ export default function Component() {
                     <ResponsiveImage
                       src={currentSectionData.image || "/placeholder.svg"}
                       alt={currentSectionData.title}
+                      className=""
                     />
                   )}
 
@@ -450,33 +454,34 @@ export default function Component() {
                       src={currentSectionData.video} 
                       thumbnail={currentSectionData.thumbnail}
                       isActive={currentSection === currentSectionData.id}
+                      className=""
                     />
                   )}
                 </div>
               </div>
 
               {/* Right text */}
-              <div className="space-y-6 lg:space-y-8 w-full text-center lg:text-left lg:pl-12">
+              <div className="space-y-4 sm:space-y-6 lg:space-y-8 w-full text-center lg:text-left lg:pl-12 px-4 sm:px-0">
                 <div
                   className={`transition-all duration-300 ease-out ${
                     isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
                   }`}
                 >
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-white mb-4 lg:mb-6 font-bold leading-tight">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-white mb-3 sm:mb-4 lg:mb-6 font-bold leading-tight">
                     {currentSectionData.title}
                   </h2>
-                  <p className="text-lg sm:text-xl text-gray-100 leading-relaxed max-w-2xl mx-auto lg:mx-0 lg:max-w-md">
+                  <p className="text-base sm:text-lg md:text-xl text-gray-100 leading-relaxed max-w-2xl mx-auto lg:mx-0 lg:max-w-md">
                     {currentSectionData.content}
                   </p>
                 </div>
 
                 {/* Progress indicators */}
-                <div className="flex justify-center lg:justify-start space-x-2 mt-8">
+                <div className="flex justify-center lg:justify-start space-x-1.5 sm:space-x-2 mt-6 sm:mt-8">
                   {scrollSections.map((_, index) => (
                     <div
                       key={index}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        index === currentSection ? "bg-white w-12" : "bg-gray-600 w-8"
+                      className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
+                        index === currentSection ? "bg-white w-8 sm:w-12" : "bg-gray-600 w-6 sm:w-8"
                       }`}
                     />
                   ))}
