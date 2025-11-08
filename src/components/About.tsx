@@ -1,5 +1,5 @@
 "use client"
-import { ArrowUpRight, Calendar } from "lucide-react"
+import { Calendar } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
 const StatCard = ({ stat, description, delay, colSpan = "span-1", visible, showHoverEffect }) => {
@@ -36,12 +36,12 @@ const StatCard = ({ stat, description, delay, colSpan = "span-1", visible, showH
 
 const About = () => {
   const stats = [
-    { stat: "500+", description: "interviews landed by our professionals", delay: 120, colSpan: "col-span-1 md:col-span-4" },
-    { stat: "8 Weeks", description: "structured program to land interviews faster", delay: 240, colSpan: "col-span-1 md:col-span-4" },
-    { stat: "1-2 Weeks", description: "average time to get first interview call", delay: 360, colSpan: "col-span-1 md:col-span-4" },
-    { stat: "100+", description: "mock interviews conducted with industry experts", delay: 480, colSpan: "col-span-1 md:col-span-5" },
-    { stat: "90%+", description: "ATS score improvement in resumes", delay: 600, colSpan: "col-span-1 md:col-span-4" },
-    { stat: "3x", description: "higher shortlisting rate", delay: 720, colSpan: "col-span-1 md:col-span-3" }
+    { stat: "12 Days", description: "median time to first interview", delay: 120, colSpan: "col-span-1 md:col-span-4" },
+    { stat: "1.6 - 1.8×", description: "increase over previous salary on accepted offers", delay: 240, colSpan: "col-span-1 md:col-span-4" },
+    { stat: "2 in 3", description: "two interviews in 30 days", delay: 360, colSpan: "col-span-1 md:col-span-4" },
+    { stat: "3.1×", description: "more callbacks from the same number of applications", delay: 480, colSpan: "col-span-1 md:col-span-5" },
+    { stat: "78%", description: "reach at least one final round within 8 weeks", delay: 600, colSpan: "col-span-1 md:col-span-4" },
+    { stat: "92%", description: "report visible momentum within the first 14 days", delay: 720, colSpan: "col-span-1 md:col-span-3" }
   ]
 
   const sectionRef = useRef(null)
@@ -90,15 +90,13 @@ const About = () => {
     <section className="min-h-screen bg-black relative" id="about" ref={sectionRef}>
       <div className="pt-8 sm:pt-12 md:pt-6 pb-8 sm:pb-12 md:pb-16 px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl m-2 sm:m-3 text-gray-400 font-semibold tracking-wider">RESULTS THAT SPEAK</p>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl m-2 sm:m-3 text-gray-400 font-semibold tracking-wider">WELCOME TO</p>
 
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-4 sm:mb-6 md:mb-8 px-2">
-            Land Interviews <span className="text-blue-400 drop-shadow-lg">Faster.</span>
+            Turning Point of Your <span className="text-blue-400 drop-shadow-lg">Job Hunt</span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-gray-100 leading-relaxed max-w-2xl mx-auto px-4 sm:px-6">
-            Expert mentorship, AI-powered tools, and proven 8-week structure to get you interview-ready and land offers faster
-          </p>
+
         </div>
 
         {/* Stats Section */}
@@ -144,24 +142,22 @@ const About = () => {
         {/* CTA */}
         <div className="text-center px-4 sm:px-6">
           <div
-            className={`flex flex-col sm:flex-row justify-center mt-6 sm:mt-8 transition-all duration-700 transform ${
+            className={`flex flex-col items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8 transition-all duration-700 transform ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
             style={{ transitionDelay: visible ? "800ms" : "0ms" }}
           >
+             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-4 sm:mb-6 md:mb-8 px-2">
+            Betting on <span className="text-blue-400 drop-shadow-lg"> Yourself ?</span>
+          </h1>
             <a
               href="/book-call"
-              className="flex items-center justify-center group text-center bg-gradient-to-r from-white to-gray-100 text-black font-bold py-3.5 sm:py-4 md:py-5 px-6 sm:px-7 md:px-8 rounded-full transition-all duration-500 shadow-2xl hover:shadow-white/30 transform hover:scale-105 text-sm sm:text-base md:text-lg backdrop-blur-sm border border-white/20 hover:from-blue-50 hover:to-white w-full sm:w-fit mx-auto"
+              className="flex items-center justify-center group text-center bg-white text-gray-900 hover:bg-gray-100 font-semibold py-3 sm:py-3.5 md:py-4 px-7 sm:px-8 md:px-9 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base md:text-lg"
             >
-              <Calendar className="mr-2 sm:mr-3 w-5 h-5 sm:w-6 sm:h-6" />
-              Book Your Strategy Call
-              <ArrowUpRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              <Calendar className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5" />
+              Place the Bet.
             </a>
           </div>
-
-          <p className="text-zinc-500 text-sm sm:text-base mt-4 sm:mt-6">
-            Join 500+ professionals who've landed interviews at top companies
-          </p>
         </div>
       </div>
 

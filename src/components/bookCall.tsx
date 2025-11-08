@@ -137,7 +137,7 @@ function BookCall() {
 
   // Memoized input class names to prevent recalculation
   const getInputClassName = useCallback((fieldName) => {
-    const baseClass = "w-full px-4 py-3 border-2 rounded-xl focus:ring-4 focus:ring-gray-100 transition-all duration-200 outline-none bg-white"
+    const baseClass = "w-full px-3 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-gray-100 transition-all duration-200 outline-none bg-white"
     const hasError = errors[fieldName]
     
     if (hasError) {
@@ -147,26 +147,51 @@ function BookCall() {
   }, [errors])
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
-        <div className="rounded-2xl shadow-2xl p-8 relative overflow-hidden bg-slate-200">
+    <div 
+      className="h-screen flex flex-col overflow-hidden relative"
+      style={{
+        background: 'linear-gradient(135deg, #dbeafe 0%, #e0e7ff 25%, #c7d2fe 50%, #a5b4fc 75%, #8b5cf6 100%)'
+      }}
+    >
+      {/* Header */}
+      <div className="w-full flex-shrink-0 relative z-10" style={{ background: 'transparent' }}>
+        <div className="max-w-6xl mx-auto px-6 py-4">
+          <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-gray-900 text-center">
+            <span>Start </span>
+            <span className="inline-flex align-middle mx-2">
+              <span className="w-10 h-10 lg:w-12 lg:h-12 bg-white rounded-xl shadow-md flex items-center justify-center">
+                <span className="w-6 h-6 lg:w-7 lg:h-7 bg-black rounded-md"></span>
+              </span>
+            </span>
+            <span>for free.</span>
+          </h2>
+          <p className="mt-2 text-base lg:text-lg text-gray-600 text-center font-medium">
+            Book the First Call for Free
+          </p>
+        </div>
+      </div>
+
+      {/* Form Container */}
+      <div className="flex-1 flex items-center justify-center py-4 px-4 sm:px-6 overflow-y-auto relative z-10">
+        <div className="max-w-sm w-full">
+          <div className="rounded-2xl shadow-2xl p-4 sm:p-6 relative overflow-hidden bg-slate-200/95 backdrop-blur-sm">
           {/* Header - Optimized structure */}
-          <header className="text-center mb-8 relative z-10">
-            <div className="flex items-center justify-center mb-4">
-              <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center mr-3 shadow-sm">
-                <div className="w-5 h-5 bg-black rounded-sm"></div>
+          <header className="text-center mb-4 relative z-10">
+            <div className="flex items-center justify-center mb-2">
+              <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center mr-2 shadow-sm">
+                <div className="w-4 h-4 bg-black rounded-sm"></div>
               </div>
-              <h1 className="font-bold text-3xl text-gray-900">Mentorque</h1>
+              <h1 className="font-bold text-xl sm:text-2xl text-gray-900">Mentorque</h1>
             </div>
-            <p className="text-lg text-gray-600 font-medium">Land Interviews Faster</p>
-            <div className="mt-3 h-1 w-16 bg-black rounded-full mx-auto"></div>
+            <p className="text-sm sm:text-base text-gray-600 font-medium">Land Interviews Faster</p>
+            <div className="mt-2 h-0.5 w-12 bg-black rounded-full mx-auto"></div>
           </header>
 
           {/* Form with optimized validation */}
-          <div className="space-y-6 relative z-10">
+          <div className="space-y-4 relative z-10">
             {/* Name Field */}
             <div className="group">
-              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-xs font-semibold text-gray-700 mb-1.5">
                 Name *
               </label>
               <input
@@ -182,13 +207,13 @@ function BookCall() {
                 aria-describedby={errors.name ? 'name-error' : undefined}
               />
               {errors.name && (
-                <p id="name-error" className="mt-1 text-sm text-red-600">{errors.name}</p>
+                <p id="name-error" className="mt-1 text-xs text-red-600">{errors.name}</p>
               )}
             </div>
 
             {/* Email Field */}
             <div className="group">
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-xs font-semibold text-gray-700 mb-1.5">
                 Email ID *
               </label>
               <input
@@ -204,13 +229,13 @@ function BookCall() {
                 aria-describedby={errors.email ? 'email-error' : undefined}
               />
               {errors.email && (
-                <p id="email-error" className="mt-1 text-sm text-red-600">{errors.email}</p>
+                <p id="email-error" className="mt-1 text-xs text-red-600">{errors.email}</p>
               )}
             </div>
 
             {/* Contact Number Field */}
             <div className="group">
-              <label htmlFor="contactNumber" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="contactNumber" className="block text-xs font-semibold text-gray-700 mb-1.5">
                 Contact Number *
               </label>
               <input
@@ -226,13 +251,13 @@ function BookCall() {
                 aria-describedby={errors.contactNumber ? 'contact-error' : undefined}
               />
               {errors.contactNumber && (
-                <p id="contact-error" className="mt-1 text-sm text-red-600">{errors.contactNumber}</p>
+                <p id="contact-error" className="mt-1 text-xs text-red-600">{errors.contactNumber}</p>
               )}
             </div>
 
             {/* Occupation Field */}
             <div className="group">
-              <label htmlFor="occupation" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="occupation" className="block text-xs font-semibold text-gray-700 mb-1.5">
                 Occupation
               </label>
               <input
@@ -248,12 +273,12 @@ function BookCall() {
             </div>
 
             {/* Submit Button */}
-            <div className="pt-6">
+            <div className="pt-3">
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={!isFormValid || isSubmitting}
-                className="w-full bg-black text-white py-4 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl focus:ring-4 focus:ring-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center relative overflow-hidden"
+                className="w-full bg-black text-white py-2.5 px-5 text-sm rounded-lg font-semibold shadow-lg hover:shadow-xl focus:ring-2 focus:ring-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center relative overflow-hidden"
                 aria-label={isSubmitting ? "Submitting application" : "Submit application"}
               >
                 {isSubmitting && (
@@ -273,7 +298,7 @@ function BookCall() {
                     </>
                   ) : (
                     <>
-                      <span>Submit Application</span>
+                      <span>Book Call</span>
                       <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
@@ -283,6 +308,16 @@ function BookCall() {
               </button>
             </div>
           </div>
+
+          {/* Error Message */}
+          {submitStatus === 'error' && (
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl" role="alert">
+              <p className="text-red-700 text-sm text-center">
+                Something went wrong. Please try again.
+              </p>
+            </div>
+          )}
+        </div>
         </div>
 
         {/* Success Modal - Optimized with better accessibility */}
@@ -314,15 +349,6 @@ function BookCall() {
                 </button>
               </div>
             </div>
-          </div>
-        )}
-
-        {/* Error Message */}
-        {submitStatus === 'error' && (
-          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl" role="alert">
-            <p className="text-red-700 text-sm text-center">
-              Something went wrong. Please try again.
-            </p>
           </div>
         )}
       </div>

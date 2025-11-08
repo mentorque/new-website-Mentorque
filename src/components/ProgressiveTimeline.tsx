@@ -384,7 +384,7 @@ const ProgressiveTimeline: React.FC = () => {
       <section className="pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-6 sm:pb-8 md:pb-12 px-4 sm:px-6 md:px-8 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-2 sm:mb-3 md:mb-6">
-            Crafted for <span className="text-blue-400">Success</span>
+            Resume  <span className="text-blue-400">Transformation</span>
           </h1>
           
           <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-100 leading-relaxed mb-6 sm:mb-8 md:mb-4 px-2">

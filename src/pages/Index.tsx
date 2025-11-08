@@ -8,6 +8,7 @@ import TestimonialCarousel from "@/components/Testimonials";
 import Weeks from "@/components/Weeks";
 import MentorqueFAQ from "@/components/faq";
 import TestimonialGallery from "@/components/whatsApp";
+import ScrollTextReveal from "@/components/ui/scrollTextReveal";
 import Resume from "@/components/resume";
 import FloatingChat from "@/components/FloatingChat";
 
@@ -78,6 +79,7 @@ const Index = () => {
          <section id="Clients">
           <LogoCarousel />
           <TestimonialGallery />
+          <ScrollTextReveal />
         </section>
 
     <section id="About">

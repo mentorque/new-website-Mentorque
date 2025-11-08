@@ -196,7 +196,14 @@ export default function FloatingChat() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 backdrop-blur-2xl border border-blue-400/40 text-white shadow-2xl shadow-blue-500/40 transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] flex items-center justify-center group ${
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] 
+          w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl 
+          bg-gradient-to-br from-neutral-800 to-black backdrop-blur-2xl 
+          border border-neutral-700/40 text-white 
+          shadow-2xl shadow-black/40 
+          transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] 
+          flex items-center justify-center group ${
+            /* your dynamic classes go here */
           isOpen 
             ? 'scale-0 opacity-0 rotate-90 pointer-events-none' 
             : 'scale-100 opacity-100 hover:scale-110 hover:border-blue-500/60 hover:shadow-blue-500/60'
@@ -346,7 +353,7 @@ export default function FloatingChat() {
                   ) : (
                     <>
                       <Calendar className="relative z-10 w-4 h-4 group-hover:scale-110 transition-transform duration-200 ease-out" />
-                      <span className="relative z-10 text-sm">Submit Application</span>
+                      <span className="relative z-10 text-sm">Book Call</span>
                     </>
                   )}
                 </button>

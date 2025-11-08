@@ -1,15 +1,4 @@
 
-
-body {
-  background: linear-gradient(
-    135deg,
-    rgb(219, 234, 254) 0%,
-    rgb(224, 231, 255) 25%,
-    rgb(199, 210, 254) 50%,
-    rgb(165, 180, 252) 75%,
-    rgb(139, 92, 246) 100%
-  );
-}
 @keyframes shimmer {
   0% {
     transform: translateX(-100%);

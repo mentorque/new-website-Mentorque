@@ -339,7 +339,7 @@ const scrollSections = [
   {
     id: 2,
     type: "resume",
-    title: "Crafted for success",
+    title: "Crafted for Success",
     content: "Resumes tailored by industry experts. Hyper-personalized to your goals. Proven to deliver tangible results fast.",
   },
   {
