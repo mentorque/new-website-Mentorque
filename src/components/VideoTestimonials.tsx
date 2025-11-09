@@ -7,15 +7,18 @@ import { Play, Pause, Calendar, ArrowUpRight } from "lucide-react"
 const videoTestimonials = [
   {
     src: "/testinomial1.mp4",
-    title: "Clip 1"
+    title: "Clip 1",
+    thumb: "/thumbnails/clip1.jpg",
   },
   {
     src: "/testinomial2.mp4",
-    title: "Clip 2"
+    title: "Clip 2",
+    thumb: "/thumbnails/clip2.jpg",
   },
   {
     src: "/testinomial4.mp4",
-    title: "Clip 4"
+    title: "Clip 4",
+    thumb: "/thumbnails/clip3.jpg",
   }
 ]
 
@@ -59,9 +62,18 @@ const VideoCard = ({ video, className = "" }) => {
       className={`group relative overflow-hidden rounded-[32px] border border-white/15 bg-white/5 p-4 sm:p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.12] ${className}`}
     >
       <div className="relative aspect-[9/16] overflow-hidden rounded-[28px] border border-white/15 bg-black shadow-[0_30px_80px_-45px_rgba(59,130,246,0.65)]">
+        {video.thumb && (
+          <img
+            src={video.thumb}
+            alt={`${video.title} thumbnail`}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${isPlaying ? "opacity-0" : "opacity-100"}`}
+            loading="lazy"
+          />
+        )}
         <video
           ref={videoRef}
           src={video.src}
+          poster={video.thumb}
           muted={false}
           playsInline
           preload="metadata"

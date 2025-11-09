@@ -16,7 +16,7 @@ const StatCard = ({ stat, description, delay, colSpan = "span-1", visible, showH
       aria-hidden={!visible}
     >
       <div className="relative z-10 flex flex-col justify-center h-full min-h-[120px] sm:min-h-[140px] md:min-h-[150px]">
-        <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 bg-gradient-to-br from-blue-200 via-blue-100 to-white bg-clip-text text-transparent drop-shadow-sm leading-tight">
+        <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-2 sm:mb-3 md:mb-4 bg-gradient-to-br from-blue-200 via-blue-100 to-white bg-clip-text text-transparent drop-shadow-sm leading-tight">
           {stat}
         </h3>
 
@@ -90,7 +90,7 @@ const About = () => {
     <section className="bg-black relative" id="about" ref={sectionRef}>
       <div className="pt-12 sm:pt-14 md:pt-16 pb-12 sm:pb-14 md:pb-16 px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl m-2 sm:m-3 text-gray-400 font-semibold tracking-wider">WELCOME TO</p>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl m-2 sm:m-3 text-gray-400  tracking-wider">WELCOME TO</p>
 
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-4 sm:mb-6 md:mb-8 px-2">
             Turning Point of Your <span className="text-blue-400 drop-shadow-lg">Job Hunt</span>
@@ -152,7 +152,7 @@ const About = () => {
           </h1>
             <a
               href="/book-call"
-              className="flex items-center justify-center group text-center bg-white text-gray-900 hover:bg-gray-100 font-semibold py-3 sm:py-3.5 md:py-4 px-7 sm:px-8 md:px-9 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base md:text-lg"
+              className="flex items-center justify-center group text-center bg-white text-gray-900 hover:bg-gray-100 py-3 sm:py-3.5 md:py-4 px-7 sm:px-8 md:px-9 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base md:text-lg"
             >
               <Calendar className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5" />
               Place the Bet.

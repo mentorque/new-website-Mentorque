@@ -112,7 +112,11 @@ const TestimonialsGallery = () => {
 
   const allImages = useMemo(() => uniqueImages, [uniqueImages])
 
-  const row1 = allImages.slice(0, Math.ceil(allImages.length / 3))
+  const mobileImages = useMemo(() => {
+    if (!allImages.length) return []
+    const loops = allImages.length >= 5 ? allImages : [...allImages, ...fallbackImages].slice(0, 10)
+    return loops
+  }, [allImages])
 
   return (
     <section className="relative bg-black text-white overflow-hidden">
@@ -140,7 +144,7 @@ const TestimonialsGallery = () => {
       <div className="relative w-full px-4 md:px-8 lg:px-12 pb-12 sm:pb-20 mb-8">
         {isMobile ? (
           <div className="flex gap-4 overflow-x-auto pb-8 snap-x snap-mandatory px-4">
-            {[...row1, ...row1].map((img, i) => (
+            {mobileImages.map((img, i) => (
               <div
                 key={`row1-${i}`}
                 className="flex-none snap-center w-[78%] min-w-[240px] max-w-[320px]"
