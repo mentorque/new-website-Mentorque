@@ -37,17 +37,8 @@ const Hero = () => {
 
   const words = ["Resume", "PortFolio","AI Agent", "Elevator Pitch", "Personal Mentor","Mock Interviews"]
 
-  const [isMobile, setIsMobile] = useState(false)
-  
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
   return (
-    <section className="relative min-h-[100vh] sm:min-h-[120vh] w-full flex items-center justify-center overflow-hidden" id="hero">
+    <section className="relative min-h-[120vh] w-full flex items-center justify-center overflow-hidden" id="hero">
       {/* Blue gradient background that transitions to black after scroll threshold */}
       <div
         className="absolute inset-0 w-full h-full transition-all duration-200 ease-out"
@@ -72,36 +63,33 @@ const Hero = () => {
 
       {/* Main content - positioned absolutely to occupy only 100vh centered */}
       <div className="absolute top-0 left-0 right-0 h-screen flex items-center justify-center z-10">
-        <div className="mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative w-full max-w-7xl">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
           <div
-            className="flex flex-col items-center text-center mx-auto transition-transform duration-100 ease-out"
+            className="flex flex-col items-center text-center max-w-7xl mx-auto transition-transform duration-100 ease-out"
             style={{
-              transform: isMobile ? `translateY(${scrollY * 0.02}px)` : `translateY(${scrollY * 0.05}px)`,
+              transform: `translateY(${scrollY * 0.05}px)`,
               opacity: Math.max(0.4, 1 - scrollProgress * 0.6),
-              width: '100%',
-              paddingLeft: isMobile ? '0.5rem' : undefined,
-              paddingRight: isMobile ? '0.5rem' : undefined,
             }}
           >
             {/* Outer box - largest with most padding */}
             <div
-              className="border-white py-3 sm:py-4 md:py-6 lg:py-10 xl:py-12 px-2.5 sm:px-4 md:px-6 lg:px-12 xl:px-16 2xl:px-20 shadow-2xl shadow-white/20 bg-white/10 backdrop-blur-sm w-full"
-              style={{ borderRadius: isMobile ? "20px" : "clamp(30px, 5vw, 80px)" }}
+              className="border-white py-6 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 shadow-2xl shadow-white/20 bg-white/10 backdrop-blur-sm"
+              style={{ borderRadius: 80 }}
             >
               {/* Middle box - medium size */}
               <div
-                className="border-white py-2.5 sm:py-3 md:py-4 lg:py-7 xl:py-8 px-2 sm:px-3 md:px-4 lg:px-10 xl:px-12 2xl:px-16 shadow-xl shadow-white/15 bg-white/15 backdrop-blur-md"
-                style={{ borderRadius: isMobile ? "16px" : "clamp(25px, 4vw, 60px)" }}
+                className="border-white py-4 sm:py-6 md:py-7 lg:py-8 px-3 sm:px-6 md:px-10 lg:px-12 xl:px-16 shadow-xl shadow-white/15 bg-white/15 backdrop-blur-md"
+                style={{ borderRadius: 60 }}
               >
                 {/* Inner box - smallest, contains content */}
                 <div
-                  className="border-white py-2 sm:py-2.5 md:py-3 lg:py-5 xl:py-6 px-2 sm:px-3 md:px-4 lg:px-8 xl:px-10 2xl:px-12 shadow-lg shadow-white/10 bg-white/20 backdrop-blur-lg m-1 sm:m-1.5 md:m-3 lg:m-6 xl:m-8"
-                  style={{ borderRadius: isMobile ? "12px" : "clamp(20px, 3vw, 40px)" }}
+                  className="border-white py-3 sm:py-4 md:py-5 lg:py-6 px-3 sm:px-6 md:px-8 lg:px-10 xl:px-12 shadow-lg shadow-white/10 bg-white/20 backdrop-blur-lg m-2 sm:m-4 md:m-6 lg:m-8"
+                  style={{ borderRadius: 40 }}
                 >
-                  <div className="m-1 sm:m-1.5 md:m-2 lg:m-4 xl:m-6 2xl:m-8">
+                  <div className="m-2 sm:m-4 md:m-6 lg:m-8">
                     {/* Main Heading */}
                     <h1
-                      className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight opacity-0 animate-fade-in mb-2 sm:mb-3 transition-colors duration-300 z-40"
+                      className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight opacity-0 animate-fade-in mb-2 transition-colors duration-300 z-40"
                       style={{
                         animationDelay: "0.3s",
                         color: scrollProgress > 0.6 ? "#ffffff" : "#111827",
@@ -109,7 +97,7 @@ const Hero = () => {
                     >
                       Land Interviews Faster.
                     </h1>
-                    <div className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-semibold text-neutral-600 dark:text-neutral-400">
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-semibold text-neutral-600 dark:text-neutral-400">
                       Your
                       <FlipWords words={words} />
                      
@@ -117,7 +105,7 @@ const Hero = () => {
 
                     {/* Description */}
                     <p
-                      className="text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed opacity-0 animate-fade-in font-medium mb-3 sm:mb-4 max-w-4xl transition-colors duration-300 mt-2 sm:mt-3 mx-auto px-1"
+                      className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed opacity-0 animate-fade-in font-medium mb-4 max-w-4xl transition-colors duration-300 mt-2 mx-auto"
                       style={{
                         animationDelay: "0.5s",
                         color: scrollProgress > 0.6 ? "#d1d5db" : "#4b5563",
@@ -133,11 +121,11 @@ const Hero = () => {
                     >
                       <Link
   to="/book-call"
-  className="flex items-center justify-center group w-full sm:w-auto text-center bg-gray-900 text-white hover:bg-black font-semibold py-2.5 sm:py-3 md:py-4 px-5 sm:px-6 md:px-8 lg:px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] text-sm sm:text-base md:text-lg"
+  className="flex items-center justify-center group w-full sm:w-auto text-center bg-gray-900 text-white hover:bg-black font-semibold py-3 sm:py-4 px-6 sm:px-8 lg:px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] text-base sm:text-lg"
 >
-  <Calendar className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+  <Calendar className="mr-2 sm:mr-3 w-5 h-5 sm:w-6 sm:h-6" />
   Book Free Session
-  <ArrowUpRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform group-hover:translate-x-1" />
+  <ArrowUpRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:translate-x-1" />
 </Link>
                     </div>
                   </div>
@@ -150,13 +138,13 @@ const Hero = () => {
 
       {/* Scroll indicator - only show when blend hasn't started */}
       <div
-        className="absolute bottom-20 sm:bottom-32 md:bottom-[150px] left-1/2 transform -translate-x-1/2 z-20 transition-opacity duration-300"
+        className="absolute bottom-[150px] sm:bottom-[200px] left-1/2 transform -translate-x-1/2 z-20 transition-opacity duration-300"
         style={{ opacity: scrollProgress === 0 ? 0.8 : 0 }}
       >
         <div className="flex flex-col items-center">
-          <span className="text-[10px] sm:text-xs md:text-sm mb-1.5 sm:mb-2 font-medium text-gray-600">Scroll to explore</span>
-          <div className="w-4 h-6 sm:w-5 sm:h-8 md:w-6 md:h-10 border-2 border-gray-800 rounded-full flex justify-center">
-            <div className="w-0.5 h-1.5 sm:h-2 md:h-3 bg-gray-800 rounded-full mt-0.5 sm:mt-1 md:mt-2 animate-bounce"></div>
+          <span className="text-xs sm:text-sm mb-2 font-medium text-gray-600">Scroll to explore</span>
+          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-gray-800 rounded-full flex justify-center">
+            <div className="w-1 h-2 sm:h-3 bg-gray-800 rounded-full mt-1 sm:mt-2 animate-bounce"></div>
           </div>
         </div>
       </div>
