@@ -14,10 +14,6 @@ const videoTestimonials = [
     title: "Clip 2"
   },
   {
-    src: "/testinomial3.mp4",
-    title: "Clip 3"
-  },
-  {
     src: "/testinomial4.mp4",
     title: "Clip 4"
   }
@@ -107,12 +103,13 @@ const VideoTestimonials = () => {
           <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.35em] text-white/70">
             Real-time Wins
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white">
-            These people moved to interviews faster.
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white">
+            Luck favors the prepared. We prepare you.
           </h2>
-          <p className="text-white/70 text-base sm:text-lg max-w-2xl">
-            Real candidates, real timelines, and the momentum that starts once Mentorque preps their story.
+          <p className="text-white/70 text-base sm:text-lg md:text-xl">
+            Your next raise starts with this click.
           </p>
+
           <Link to="/book-call" className="mt-6 inline-flex">
             <button className="group inline-flex items-center gap-3 bg-gradient-to-b from-white to-gray-100 hover:from-gray-50 hover:to-white text-black font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-2xl transition-all duration-300 shadow-[0_8px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_12px_40px_rgba(255,255,255,0.25)] hover:-translate-y-1 border border-white/20">
               <Calendar className="w-5 h-5" />
@@ -124,19 +121,19 @@ const VideoTestimonials = () => {
         </div>
 
         <div className="mt-12">
-          <div className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory md:hidden">
+          <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory md:hidden justify-around">
             {videoTestimonials.map((video) => (
               <VideoCard
                 key={`${video.src}-mobile`}
                 video={video}
-                className="min-w-[240px] snap-center"
+                className="w-[224px] sm:w-[266px] flex-shrink-0 snap-center"
               />
             ))}
           </div>
 
-          <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-4 md:gap-8">
+          <div className="hidden md:flex md:flex-wrap md:justify-around md:gap-6">
             {videoTestimonials.map((video) => (
-              <VideoCard key={video.src} video={video} />
+              <VideoCard key={video.src} video={video} className="w-[336px]" />
             ))}
           </div>
         </div>

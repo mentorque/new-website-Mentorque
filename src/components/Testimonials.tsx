@@ -55,55 +55,6 @@ const TestimonialCarousel = () => {
     },
  
     {
-      id: 8,
-      name: "Sree",
-      content:
-        "After six months with no interview calls, I heard back from Optum, Amazon, and eBay within two weeks of joining Mentorque and landed a Vodafone Order Analyst role.",
-      rating: 5,
-      avatar: "/Testimonials-People/sreelaxmi-testimonial.jpeg",
-      logos: [
-        "/Testimony Company logos/sree-logo-1.png",
-        "/Testimony Company logos/sree-logo-2.png",
-        "/Testimony Company logos/sree-logo-3.jpg",
-        "/Testimony Company logos/sree-logo-4.png",
-      ],
-    },
-    {
-      id: 9,
-      name: "Shubham",
-      content:
-        "The personalised guidance made all the difference. I received interview calls from DE Shaw, Q2, Saviynt, and AQR Capital. I’d recommend Mentorque to anyone trying to land calls from top firms.",
-      rating: 5,
-      avatar: "/Testimonials-People/shubham-testimonial.png",
-      logos: [
-        "/Testimony Company logos/shubham-logo-1.png",
-        "/Testimony Company logos/shubham-logo-2.png",
-      ],
-    },
-    {
-      id: 10,
-      name: "Sowmya",
-      content:
-        "Mentorque sharpened my application strategy  within weeks I received calls from Amazon and Bounce.io and secured an IT consultant role at TP Dublin.",
-      rating: 5,
-      avatar: "/Testimonials-People/sowmya-testimonial.jpeg",
-      logos: [
-        "/Testimony Company logos/sowmya-logo-1.png",
-        "/Testimony Company logos/sowmya-logo-2.jpeg",
-      ],
-    },
-    {
-      id: 11,
-      name: "Morgan",
-      content:
-        "Working with the team helped me land multiple interview calls in a week using their strategies and automation tools to find and connect with HRs. Highly recommended if you want a faster breakthrough in a tough job market.",
-      rating: 5,
-      avatar: "/Testimonials-People/morgan-testimonial.jpeg",
-      logos: [
-        "/Testimony Company logos/morgan-logo-1.jpeg",
-      ],
-    },
-    {
       id: 12,
       name: "Pramod",
       content:
@@ -124,6 +75,55 @@ const TestimonialCarousel = () => {
       logos: [
         "/Testimony Company logos/udith-logo-1.png",
         "/Testimony Company logos/udith-logo-2.png",
+      ],
+    },
+    {
+      id: 9,
+      name: "Shubham",
+      content:
+        "The personalised guidance made all the difference. I received interview calls from DE Shaw, Q2, Saviynt, and AQR Capital. I’d recommend Mentorque to anyone trying to land calls from top firms.",
+      rating: 5,
+      avatar: "/Testimonials-People/shubham-testimonial.png",
+      logos: [
+        "/Testimony Company logos/shubham-logo-1.png",
+        "/Testimony Company logos/shubham-logo-2.png",
+      ],
+    },
+    {
+      id: 11,
+      name: "Morgan",
+      content:
+        "Working with the team helped me land multiple interview calls in a week using their strategies and automation tools to find and connect with HRs. Highly recommended if you want a faster breakthrough in a tough job market.",
+      rating: 5,
+      avatar: "/Testimonials-People/morgan-testimonial.jpeg",
+      logos: [
+        "/Testimony Company logos/morgan-logo-1.jpeg",
+      ],
+    },
+    {
+      id: 10,
+      name: "Sowmya",
+      content:
+        "Mentorque sharpened my application strategy  within weeks I received calls from Amazon and Bounce.io and secured an IT consultant role at TP Dublin.",
+      rating: 5,
+      avatar: "/Testimonials-People/sowmya-testimonial.jpeg",
+      logos: [
+        "/Testimony Company logos/sowmya-logo-1.png",
+        "/Testimony Company logos/sowmya-logo-2.jpeg",
+      ],
+    },
+    {
+      id: 8,
+      name: "Sree",
+      content:
+        "After six months with no interview calls, I heard back from Optum, Amazon, and eBay within two weeks of joining Mentorque and landed a Vodafone Order Analyst role.",
+      rating: 5,
+      avatar: "/Testimonials-People/sreelaxmi-testimonial.jpeg",
+      logos: [
+        "/Testimony Company logos/sree-logo-1.png",
+        "/Testimony Company logos/sree-logo-2.png",
+        "/Testimony Company logos/sree-logo-3.jpg",
+        "/Testimony Company logos/sree-logo-4.png",
       ],
     },
   ]
@@ -154,7 +154,6 @@ const TestimonialCarousel = () => {
               <Quote className="w-5 h-5 sm:w-6 sm:h-6 text-white/80" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-white/70 uppercase tracking-[0.28em]">testimonial</div>
               <div className="flex gap-1 mt-2">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-400 text-yellow-400" />
@@ -182,7 +181,6 @@ const TestimonialCarousel = () => {
             </div>
             <div className="flex-1">
               <div className="font-semibold text-white text-lg sm:text-xl md:text-2xl">{testimonial.name}</div>
-              <div className="mt-1 text-white/50 text-xs sm:text-sm uppercase tracking-[0.22em]">Mentorque </div>
             </div>
           </div>
 

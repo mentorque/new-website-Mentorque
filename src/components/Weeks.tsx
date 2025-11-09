@@ -32,7 +32,6 @@ function ResponsiveImage({ src, alt, className, priority = false, ...props }) {
 }
 
 function ResponsiveVideo({ src, thumbnail, className, isActive, priority = false, ...props }) {
-  const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [showThumbnail, setShowThumbnail] = useState(true)
@@ -71,14 +70,12 @@ function ResponsiveVideo({ src, thumbnail, className, isActive, priority = false
       video.load()
       
       const handleLoadedData = () => {
-        setIsLoaded(true)
         setHasError(false)
       }
       
       const handleError = (e) => {
         console.error("Video loading error:", src, e)
         setHasError(true)
-        setIsLoaded(false)
         setIsLoading(false)
       }
 
@@ -244,7 +241,6 @@ function ResponsiveVideo({ src, thumbnail, className, isActive, priority = false
           className="absolute inset-0 z-30 flex flex-col items-center justify-center w-full h-full bg-gray-800/50 rounded-2xl p-4 cursor-pointer"
           onClick={() => {
             setHasError(false)
-            setIsLoaded(false)
             const video = videoRef.current
             if (video) {
               video.load()
@@ -415,7 +411,7 @@ export default function Weeks() {
   const isVideoSection = currentSectionData.type === "video"
 
   return (
-    <div className="bg-black">
+    <section className="bg-black py-8 sm:py-12 md:py-16">
       <div ref={containerRef} className="relative" style={{ height: `${containerHeight}vh` }}>
         <div className="sticky top-0 flex items-center h-screen">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
@@ -467,7 +463,7 @@ export default function Weeks() {
                     isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
                   }`}
                 >
-                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-white mb-3 sm:mb-4 lg:mb-6 font-bold leading-tight">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-white mb-3 sm:mb-4 lg:mb-6 leading-tight">
                     {currentSectionData.title}
                   </h2>
                   <p className="text-base sm:text-lg md:text-xl text-gray-100 leading-relaxed max-w-2xl mx-auto lg:mx-0 lg:max-w-md">
@@ -491,6 +487,6 @@ export default function Weeks() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

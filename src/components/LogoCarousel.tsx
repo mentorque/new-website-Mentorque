@@ -35,6 +35,7 @@ const LogoCarousel = () => {
                     )}
                   </div>
                 ))}
+                <div className="w-6 sm:w-8 md:w-10 lg:w-12 xl:w-16 flex-shrink-0" />
               </div>
             ))}
           </div>

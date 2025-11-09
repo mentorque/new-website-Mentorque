@@ -87,8 +87,8 @@ const About = () => {
   }, [])
 
   return (
-    <section className="min-h-screen bg-black relative" id="about" ref={sectionRef}>
-      <div className="pt-8 sm:pt-12 md:pt-6 pb-8 sm:pb-12 md:pb-16 px-4 sm:px-6 md:px-8 lg:px-12">
+    <section className="bg-black relative" id="about" ref={sectionRef}>
+      <div className="pt-12 sm:pt-14 md:pt-16 pb-12 sm:pb-14 md:pb-16 px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
           <p className="text-sm sm:text-base md:text-lg lg:text-xl m-2 sm:m-3 text-gray-400 font-semibold tracking-wider">WELCOME TO</p>
 
@@ -140,9 +140,9 @@ const About = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center px-4 sm:px-6">
+        <div className="text-center px-4 sm:px-6 pb-8 sm:pb-10 md:pb-12">
           <div
-            className={`flex flex-col items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8 transition-all duration-700 transform ${
+            className={`flex flex-col items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10 transition-all duration-700 transform ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
             style={{ transitionDelay: visible ? "800ms" : "0ms" }}

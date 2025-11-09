@@ -26,11 +26,7 @@ const CareersHero = () => {
       gridClass: "order-1 md:order-1 lg:col-start-1 lg:row-start-1 justify-self-start lg:self-end",
       frameClass:
         "w-full aspect-[3/4] xs:aspect-[5/6] sm:aspect-[4/3] md:w-56 md:aspect-[5/4] border border-white/20 shadow-[0_30px_80px_-40px_rgba(15,118,255,0.55)] -rotate-6 translate-y-1 md:-translate-y-4 hover:-translate-y-6",
-      badge: {
-        text: "Dublin",
-        className:
-          "absolute top-4 left-4 inline-flex items-center gap-1 px-3 py-1 text-xs font-medium tracking-wide uppercase rounded-full bg-white/85 text-slate-900 shadow-lg shadow-sky-500/30"
-      },
+      badge: null,
       overlayGradient: "from-amber-200/10 via-transparent to-purple-400/20"
     },
     {
@@ -40,11 +36,7 @@ const CareersHero = () => {
       gridClass: "order-2 md:order-2 lg:col-start-2 lg:row-start-1 justify-self-center lg:self-start",
       frameClass:
         "w-full aspect-[3/4] xs:aspect-[5/6] sm:aspect-[4/3] md:w-[20rem] md:aspect-[5/4] border border-white/15 shadow-[0_40px_120px_-50px_rgba(168,85,247,0.6)] rotate-1 -translate-y-2 md:-translate-y-6 hover:-translate-y-8",
-      badge: {
-        text: "Apple Park",
-        className:
-          "absolute top-5 left-5 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-purple-500/80 text-white backdrop-blur"
-      },
+      badge: null,
       overlayGradient: "from-purple-300/25 via-transparent to-pink-400/30"
     },
     {
@@ -54,12 +46,22 @@ const CareersHero = () => {
       gridClass: "order-3 md:order-3 lg:col-start-3 lg:row-start-1 justify-self-end lg:self-end",
       frameClass:
         "w-full aspect-[3/4] xs:aspect-[5/6] sm:aspect-[4/3] md:w-[20rem] md:aspect-[5/4] border border-cyan-300/40 shadow-[0_30px_90px_-40px_rgba(6,182,212,0.7)] rotate-3 -translate-y-1 md:-translate-y-2 hover:-translate-y-6",
-      badge: {
-        text: "Google HQ",
-        className:
-          "absolute bottom-5 right-5 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-cyan-500/80 text-white backdrop-blur"
-      },
-      overlayGradient: "from-cyan-200/25 via-transparent to-blue-400/25"
+      badge: null,
+      overlayGradient: "from-cyan-200/25 via-transparent to-blue-400/25",
+      decoration: (
+        <div className="hidden lg:block absolute -top-10 -right-8">
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-red-500/35 blur-[36px]" />
+            <Flame className="relative h-24 w-24 text-red-500 drop-shadow-[0_28px_68px_rgba(239,68,68,0.45)]" fill="currentColor" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <svg className="h-14 w-14" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3C8.5 3 7 6 7 8.5C7 9.5 7.5 10.5 8 11C6.5 11.5 5 13 5 15.5C5 18.5 7.5 21 12 21C16.5 21 19 18.5 19 15.5C19 13 17.5 11.5 16 11C16.5 10.5 17 9.5 17 8.5C17 6 15.5 3 12 3Z" fill="#ff6b35"/>
+                <ellipse cx="12" cy="8" rx="1.8" ry="2.4" fill="#ffd700"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      )
     },
     {
       key: "bangalore-skyline",
@@ -68,12 +70,15 @@ const CareersHero = () => {
       gridClass: "order-4 md:order-4 lg:col-start-1 lg:row-start-2 justify-self-center lg:self-start",
       frameClass:
         "w-full aspect-[3/4] xs:aspect-[5/6] sm:aspect-[4/3] md:w-56 md:aspect-[5/4] border border-white/15 shadow-[0_25px_70px_-45px_rgba(59,130,246,0.7)] rotate-1 translate-y-2 md:translate-y-4 hover:-translate-y-1",
-      badge: {
-        text: "Bangalore",
-        className:
-          "absolute bottom-4 right-4 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-slate-900/80 text-white backdrop-blur"
-      },
-      overlayGradient: "from-purple-400/30 via-transparent to-blue-300/20"
+      badge: null,
+      overlayGradient: "from-purple-400/30 via-transparent to-blue-300/20",
+      decoration: (
+        <div className="hidden lg:block absolute -bottom-10 -left-8">
+          <div className="flex items-center justify-center rounded-full border border-yellow-200/40 bg-yellow-200/20 p-6 shadow-[0_48px_110px_-40px_rgba(250,204,21,0.75)] rotate-3">
+            <Sparkles className="h-20 w-20 text-yellow-200 drop-shadow-[0_20px_45px_rgba(250,204,21,0.4)]" fill="currentColor" />
+          </div>
+        </div>
+      )
     },
     {
       key: "mentorque-interior",
@@ -82,11 +87,7 @@ const CareersHero = () => {
       gridClass: "order-5 md:order-5 lg:col-start-2 lg:row-start-2 justify-self-center",
       frameClass:
         "w-full aspect-[3/4] xs:aspect-[5/6] sm:aspect-[4/3] md:w-[22rem] md:aspect-[5/4] border border-white/15 shadow-[0_30px_90px_-40px_rgba(238,238,238,0.45)] rotate-0 translate-y-3 md:translate-y-6 hover:-translate-y-1",
-      badge: {
-        text: "inside amazon",
-        className:
-          "absolute top-5 right-5 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-white/85 text-slate-800 backdrop-blur"
-      },
+      badge: null,
       overlayGradient: "from-amber-200/20 via-transparent to-rose-200/30",
       decoration: (
         <svg
@@ -120,11 +121,7 @@ const CareersHero = () => {
       gridClass: "order-6 md:order-6 lg:col-start-3 lg:row-start-2 justify-self-end lg:self-end",
       frameClass:
         "w-full aspect-[3/4] xs:aspect-[5/6] sm:aspect-[4/3] md:w-56 md:aspect-[5/4] border border-white/20 shadow-[0_35px_90px_-45px_rgba(56,189,248,0.7)] rotate-2 translate-y-2 md:translate-y-5 hover:-translate-y-1",
-      badge: {
-        text: "London",
-        className:
-          "absolute bottom-4 left-4 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-slate-900/80 text-white backdrop-blur"
-      },
+      badge: null,
       overlayGradient: "from-blue-300/25 via-transparent to-indigo-400/25"
     }
   ];
@@ -182,32 +179,8 @@ const CareersHero = () => {
   return (
     <div className="relative w-full min-h-[60vh] sm:min-h-[70vh] lg:min-h-[90vh] xl:min-h-screen bg-black overflow-hidden py-8 sm:py-16 md:py-20">
       {/* Large "JOB" text background */}
-      <div
-        className="hidden sm:block absolute top-4 left-4 text-yellow-100 font-black text-[150px] lg:text-[200px] leading-none opacity-30 select-none tracking-[0.06em] drop-shadow-[0_12px_32px_rgba(255,255,255,0.08)]"
-        style={{ fontFamily: 'Arial Black, sans-serif' }}
-      >
-        JOB
-      </div>
+  
       
-      {/* Sparkles decoration - left */}
-      <div className="absolute bottom-20 left-12 z-20 rounded-full border border-yellow-200/35 bg-yellow-200/18 p-5 shadow-[0_40px_95px_-35px_rgba(250,204,21,0.7)] transform rotate-3">
-        <Sparkles className="w-14 h-14 md:w-16 md:h-16 text-yellow-200 drop-shadow-[0_16px_32px_rgba(250,204,21,0.35)]" fill="currentColor" />
-      </div>
-      
-      {/* Fire emoji - top right */}
-      <div className="hidden sm:block absolute top-6 right-16 sm:top-6 sm:right-20 md:top-4 md:right-28 z-30 transform -rotate-3">
-        <div className="relative">
-          <div className="absolute inset-0 rounded-full bg-red-500/30 blur-[24px]" />
-          <Flame className="relative h-16 w-16 sm:h-20 sm:w-20 md:h-[5rem] md:w-[5rem] text-red-500 drop-shadow-[0_20px_50px_rgba(239,68,68,0.5)]" fill="currentColor" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <svg className="h-10 w-10 sm:h-12 sm:w-12" viewBox="0 0 24 24" fill="none">
-              <path d="M12 3C8.5 3 7 6 7 8.5C7 9.5 7.5 10.5 8 11C6.5 11.5 5 13 5 15.5C5 18.5 7.5 21 12 21C16.5 21 19 18.5 19 15.5C19 13 17.5 11.5 16 11C16.5 10.5 17 9.5 17 8.5C17 6 15.5 3 12 3Z" fill="#ff6b35"/>
-              <ellipse cx="12" cy="8" rx="1.5" ry="2" fill="#ffd700"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-
       {/* Central ambience to fill negative space */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">
         <div className="relative h-32 w-32 sm:h-40 sm:w-40 md:h-64 md:w-64">
