@@ -5,11 +5,12 @@ import LogoCarousel from "@/components/LogoCarousel";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
 import TestimonialCarousel from "@/components/Testimonials";
-import Component from "@/components/Weeks";
+import Weeks from "@/components/Weeks";
 import MentorqueFAQ from "@/components/faq";
-import FierceImageCarousel from "@/components/whatsApp";
-import Resume from "@/components/resume"; 
-import ProgressiveTimeline from '@/components/ProgressiveTimeline.tsx'
+import TestimonialGallery from "@/components/whatsApp";
+import ScrollTextReveal from "@/components/ui/scrollTextReveal";
+import Resume from "@/components/resume";
+import FloatingChat from "@/components/FloatingChat";
 
 const Index = () => {
   // Scroll animations
@@ -75,35 +76,31 @@ const Index = () => {
           <Hero />
         </section>
 
-         <section id="Testimonials">
-             <LogoCarousel />
-          <TestimonialCarousel />
+         <section id="Clients">
+          <LogoCarousel />
+          <TestimonialGallery />
+          <ScrollTextReveal />
         </section>
 
- <section id="About">
+    <section id="About">
           <About />
         </section>
-       
 
             <section id="services">
-          <Component />
-        </section>
+              <Weeks />
+            </section>
 
-
-        <section id="ProgressiveTimeline">
-          <ProgressiveTimeline/>
+       <section id="Testimonials">
+          <TestimonialCarousel />
         </section>
-
-    
-        <section id="Clients">
-          <FierceImageCarousel />
-        </section>
+       
 
         <section id="FAQ">
           <MentorqueFAQ />
         </section>
       </main>
       <Footer />
+      <FloatingChat />
     </div>
   );
 };

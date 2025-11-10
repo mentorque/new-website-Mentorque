@@ -32,10 +32,8 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Home", href: "/#Home" },
-    { name: "Clients", href: "/#Clients" },
     { name: "About", href: "/#About" },
-    { name: "Structure", href: "/#ProgressiveTimeline" },
-    { name: "Services", href: "/#services" },
+    { name: "Structure", href: "/structure" },
     { name: "Testimonials", href: "/#Testimonials" },
     { name: "FAQ's", href: "/#FAQ" },
   ];
@@ -76,8 +74,8 @@ const Navbar = () => {
   const colors = getTextColors();
 
   return (
-    <nav className="fixed top-4 left-0 right-0 z-[1000] flex justify-center items-start pointer-events-none">
-      <div className="max-w-6xl md:w-full px-[7px]">
+    <nav className="fixed top-2 sm:top-4 left-0 right-0 z-[1000] flex justify-center items-start pointer-events-none">
+      <div className="max-w-6xl md:w-full px-2 sm:px-[7px] w-full">
         {/* Desktop Navbar */}
         <div
           className={cn(
@@ -134,18 +132,17 @@ const Navbar = () => {
         {/* Mobile Navbar */}
         <div
           className={cn(
-            "md:hidden flex items-center justify-end w-full px-4 rounded-2xl transition-all duration-500 ease-out pointer-events-auto",
+            "md:hidden flex items-center justify-between w-[60%] px-3 sm:px-4 py-2.5 rounded-xl transition-all duration-500 ease-out pointer-events-auto mx-auto",
             "backdrop-blur-2xl bg-black/10 border border-white/10 shadow-2xl shadow-black/20",
             isScrolled ? "bg-black/20 border-white/20" : ""
           )}
-          style={{ minHeight: 52 }}
         >
           {/* Mobile Logo */}
-          <Link to="/#Home" className="flex items-center mr-9">
-  <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center mr-2.5">
-    <div className="w-4 h-4 bg-black rounded-sm"></div>
+          <Link to="/#Home" className="flex items-center flex-shrink-0">
+  <div className="w-6 h-6 sm:w-7 sm:h-7 bg-white rounded-lg flex items-center justify-center mr-2">
+    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 bg-black rounded-sm"></div>
   </div>
-  <span className={cn("font-bold text-lg transition-colors duration-500", colors.logoText)}>
+  <span className={cn("font-bold text-base sm:text-lg transition-colors duration-500 whitespace-nowrap", colors.logoText)}>
     Mentorque
   </span>
 </Link>
@@ -155,25 +152,25 @@ const Navbar = () => {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={cn(
-              "p-2 rounded-lg transition-colors duration-500 ml-9",
+              "p-1.5 sm:p-2 rounded-lg transition-colors duration-500 flex-shrink-0",
               colors.iconColor,
               isScrolled ? "hover:bg-white/10" : "hover:bg-black/10"
             )}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={20} className="sm:w-6 sm:h-6" /> : <Menu size={20} className="sm:w-6 sm:h-6" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-2 p-[7px] rounded-2xl backdrop-blur-2xl bg-black/10 border border-white/10 shadow-2xl shadow-black/20 pointer-events-auto">
-            <div className="flex flex-col space-y-3">
+          <div className="md:hidden mt-2 p-3 sm:p-4 rounded-xl backdrop-blur-2xl bg-black/10 border border-white/10 shadow-2xl shadow-black/20 pointer-events-auto w-[60%] mx-auto">
+            <div className="flex flex-col space-y-2.5">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
                   className={cn(
-                    "transition-colors duration-500 font-medium py-2 px-2 rounded-lg",
+                    "transition-colors duration-500 font-medium py-2.5 px-3 rounded-lg text-sm sm:text-base",
                     colors.navText,
                     isScrolled ? "hover:bg-white/10" : "hover:bg-black/10"
                   )}
@@ -186,11 +183,12 @@ const Navbar = () => {
               <Link
                 to="/book-call"
                 className={cn(
-                  "flex items-center justify-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium group transform hover:scale-[1.02] shadow-lg hover:shadow-xl",
+                  "flex items-center justify-center space-x-2 px-4 py-3 rounded-xl transition-all duration-300 font-medium group transform hover:scale-[1.02] shadow-lg hover:shadow-xl text-sm sm:text-base mt-1",
                   isScrolled
                     ? "bg-white text-gray-900 hover:bg-gray-100"
                     : "bg-gray-900 text-white hover:bg-black"
                 )}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 <Flag
                   size={16}

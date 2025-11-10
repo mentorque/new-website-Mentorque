@@ -8,71 +8,107 @@ const TestimonialCarousel = () => {
 
   const regularTestimonials = [
     {
-        id: 1,
-      name: "Nilesh Khatiya",
-    
+      id: 9,
+      name: "Sree",
       content:
-        "Doing self prep, I couldn't even get any call backs from companies. The resume and portfolios built by Reshu and team were a gamechanger. 100% recommended. ",
+        "After six months with no interview calls, I heard back from Optum, Amazon, and eBay within two weeks of joining Mentorque and landed a Vodafone Order Analyst role.",
+      rating: 5,
+      avatar: "/Testimonials-People/sreelaxmi-testimonial.jpeg",
+    },
+    {
+      id: 11,
+      name: "Sowmya",
+      content:
+        "Mentorque sharpened my application strategy within weeks I received calls from Amazon and Bounce.io and secured an IT consultant role at TP Dublin.",
+      rating: 5,
+      avatar: "/Testimonials-People/sowmya-testimonial.jpeg",
+    },
+    {
+      id: 12,
+      name: "Morgan",
+      content:
+        "Working with the team helped me land multiple interview calls in a week using their strategies and automation tools to find and connect with HRs. Highly recommended if you want a faster breakthrough in a tough job market.",
+      rating: 5,
+      avatar: "/Testimonials-People/morgan-testimonial.jpeg",
+    },
+    {
+      id: 10,
+      name: "Shubham",
+      content:
+        "The personalised guidance made all the difference. I received interview calls from DE Shaw, Q2, Saviynt, and AQR Capital. I’d recommend Mentorque to anyone trying to land calls from top firms.",
+      rating: 5,
+      avatar: "/Testimonials-People/shubham-testimonial.png",
+    },
+    {
+      id: 1,
+      name: "Nilesh Khatiya",
+      content:
+        "Doing self prep, I couldn't even get any call backs from companies. The resume and portfolios built by Reshu and team were a gamechanger. 100% recommended.",
       rating: 5,
       avatar: "/nilesh.jpeg",
     },
     {
       id: 2,
       name: "Jagruthi C",
-      content: "Agniva’s guidance, personal progress tracking and LLM powered resume tools simplified my job hunt process and saved me a lot of time.",
+      content:
+        "Agniva’s guidance, personal progress tracking and LLM powered resume tools simplified my job hunt process and saved me a lot of time.",
       rating: 4,
       avatar: "/jagruti.jpeg",
     },
     {
-       id: 3,
+      id: 3,
       name: "Debmalya Das",
-      
-      content: "Few sessions with Agniva and Raajit saved me months of trial and error. Would highly recommend for getting calls faster!",
+      content:
+        "Few sessions with Agniva and Raajit saved me months of trial and error. Would highly recommend for getting calls faster!",
       rating: 5,
-      
       avatar: "/3.jpeg",
     },
     {
-       id: 4,
-      name: "Dev ",
-   
-      content: "Steadfast support from Reshu plus the chrome extension made my job search much more faster and effective.                           ",
+      id: 4,
+      name: "Dev",
+      content:
+        "Steadfast support from Reshu plus the chrome extension made my job search much more faster and effective.",
       rating: 5,
       avatar: "/dev.jpeg",
     },
     {
       id: 5,
       name: "Anshul Shetty",
-
-      content: "The resume session helped me realise crucial ATS related mistakes and hear back from mutiple companies including Amazon.                       ",
+      content:
+        "The resume session helped me realise crucial ATS related mistakes and hear back from mutiple companies including Amazon.",
       rating: 4,
       avatar: "/anshul.jpeg",
     },
     {
-       id: 6,
+      id: 6,
       name: "Rigved Harmalker",
-
-      content: "The mock interviews with Raajit and Agniva were crucial in securing my internship offer.                                                    ",
+      content:
+        "The mock interviews with Raajit and Agniva were crucial in securing my internship offer.",
       rating: 5,
       avatar: "/rigved.jpeg",
     },
     {
-        id: 7,
-      name: "Surbhi",
-
-      content: "Frequent mentor calls pinpointed crucial issues, refined my application strategy, and helped me in getting 4-5 calls in 1 month.",
+      id: 13,
+      name: "Pramod",
+      content:
+        "Mentorque revamped my profile and added industry-relevant projects that showcased my skills. Soon after, I received interview calls from Landmark Group, Alaan Pay, and Intervue.io.",
       rating: 5,
-      avatar: "/surbhi.jpeg",
+      avatar: "/Testimonials-People/pramod-testimonial.png",
     },
-     {
-          id: 8,
-      name: "SS Karthik",
+    {
+      id: 14,
+      name: "Udith",
+      content:
+        "Four calls with the team helped me get multiple callbacks from Amazon, TestGorilla, and more.",
+      rating: 5,
+      avatar: "/Testimonials-People/udith-testimonial.jpeg",
+    },
+  ];
 
-      content: "Mentorque's steadfast approach and end to end mock interview calls helped me crack a role in Bosch.                                ",
-      rating: 4,
-      avatar: "/ss.jpeg",
-    }
-  ]
+  const uniqueTestimonials = regularTestimonials.filter((testimonial, index, self) => {
+    return index === self.findIndex((item) => item.id === testimonial.id)
+  })
+  
 
   const scrollCarousel = (ref: React.RefObject<HTMLDivElement>, direction: "left" | "right") => {
     if (ref.current) {
@@ -97,7 +133,7 @@ const TestimonialCarousel = () => {
           ))}
         </div>
       </div>
-      <blockquote className="text-gray-200 mb-6 leading-relaxed text-sm md:text-base font-medium pb-20">
+      <blockquote className="text-gray-200 mb-6 leading-relaxed text-sm md:text-base font-medium pb-12">
         {testimonial.content}
       </blockquote>
       
@@ -121,7 +157,7 @@ const TestimonialCarousel = () => {
   )
 
   return (
-    <section className="py-24 md:py-32 bg-black overflow-hidden" id="testimonials">
+    <section className="pt-6 md:pt-8 pb-10 md:pb-12 bg-black overflow-hidden" id="testimonials">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
           
@@ -161,7 +197,7 @@ const TestimonialCarousel = () => {
               className="flex overflow-x-auto scrollbar-hide scroll-smooth px-4 md:px-16"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              {regularTestimonials.map((testimonial) => (
+              {uniqueTestimonials.map((testimonial) => (
                 <RegularTestimonialCard key={testimonial.id} testimonial={testimonial} />
               ))}
             </div>

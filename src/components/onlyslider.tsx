@@ -50,15 +50,24 @@ export default function Resume() {
     }
   }, [isVisible])
 
+  const [isMobile, setIsMobile] = useState(false)
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
-    <div ref={sectionRef} className="w-full h-full flex items-center justify-center">
-      <div className="w-full h-full max-w-lg">
+    <div ref={sectionRef} className="w-full h-full flex items-center justify-center p-2 sm:p-4">
+      <div className="w-full h-full max-w-lg flex items-center justify-center">
         <BeforeAfterSlider
           before={beforeResume}
           after={afterResume}
-          width={470}
-          height={580}
-          className="w-full h-full"
+          width={isMobile ? 320 : 470}
+          height={isMobile ? 420 : 580}
+          className={isMobile ? "w-full max-h-[420px] object-contain" : "w-full h-full"}
         />
       </div>
     </div>

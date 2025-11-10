@@ -210,15 +210,15 @@ const TimelineCard: React.FC<{
         >
 
           {index !== timelineData.length - 1 && (
-            <div className="flex items-center gap-1 md:gap-4 mb-1 md:mb-4 justify-end mr-1 md:mr-0">
-              <span className="text-xs md:text-xl font-semibold uppercase tracking-wider text-white">Week</span>
-              <div className="text-base md:text-3xl font-bold text-blue-400">{item.icon}</div>
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-4 mb-1 sm:mb-2 md:mb-4 justify-end mr-1 sm:mr-0">
+              <span className="text-[10px] sm:text-xs md:text-xl font-semibold uppercase tracking-wider text-white">Week</span>
+              <div className="text-sm sm:text-base md:text-3xl font-bold text-blue-400">{item.icon}</div>
             </div>
           )}
 
           {/* Title */}
           <Link to={item.path}>
-  <h3 className="text-xs md:text-2xl font-bold text-blue-400 mb-1 md:mb-4 text-right whitespace-nowrap flex items-center gap-1 md:gap-2 justify-end mr-1 md:mr-0">
+  <h3 className="text-sm sm:text-base md:text-2xl font-bold text-blue-400 mb-1 sm:mb-2 md:mb-4 text-right whitespace-nowrap flex items-center gap-1 sm:gap-1.5 md:gap-2 justify-end mr-1 sm:mr-0">
     {item.title}
     <motion.span
       initial={{ scale: 1.6, opacity: 0.7 }}
@@ -232,8 +232,8 @@ const TimelineCard: React.FC<{
 </Link>
 
 {/* Mobile only know more */}
-<Link to={item.path} className="flex items-center gap-1 text-blue-400 text-xs mt-1 md:hidden justify-end">
-  <Info size={12} strokeWidth={2} />
+<Link to={item.path} className="flex items-center gap-1 text-blue-400 text-[10px] sm:text-xs mt-0.5 sm:mt-1 md:hidden justify-end">
+  <Info size={10} className="sm:w-3 sm:h-3" strokeWidth={2} />
   <span>Know more</span>
 </Link>
 
@@ -264,13 +264,13 @@ const TimelineCard: React.FC<{
           }}
         >
           {/* Week indicator - aligned with title */}
-          <div className="flex items-center gap-1 md:gap-4 mb-1 md:mb-4 justify-start ml-1 md:ml-0">
-            <span className="text-xs md:text-xl font-semibold uppercase tracking-wider text-white">Week</span>
-            <div className="text-base md:text-3xl font-bold text-blue-400">{item.icon}</div>
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-4 mb-1 sm:mb-2 md:mb-4 justify-start ml-1 sm:ml-0">
+            <span className="text-[10px] sm:text-xs md:text-xl font-semibold uppercase tracking-wider text-white">Week</span>
+            <div className="text-sm sm:text-base md:text-3xl font-bold text-blue-400">{item.icon}</div>
           </div>
 
           <Link to={item.path}>
-  <h3 className="text-xs md:text-2xl font-bold text-blue-400 mb-1 md:mb-4 text-left whitespace-nowrap flex items-center gap-1 md:gap-2 justify-start ml-1 md:ml-0">
+  <h3 className="text-sm sm:text-base md:text-2xl font-bold text-blue-400 mb-1 sm:mb-2 md:mb-4 text-left whitespace-nowrap flex items-center gap-1 sm:gap-1.5 md:gap-2 justify-start ml-1 sm:ml-0">
     <motion.span
       initial={{ scale: 1.6, opacity: 0.7 }}
       animate={{ scale: [1.6, 1.15, 1.6], opacity: [0.7, 1, 0.7] }}
@@ -284,8 +284,8 @@ const TimelineCard: React.FC<{
 </Link>
 
 {/* Mobile only know more */}
-<Link to={item.path} className="flex items-center gap-1 text-blue-400 text-xs mt-1 md:hidden justify-start">
-  <Info size={12} strokeWidth={2} />
+<Link to={item.path} className="flex items-center gap-1 text-blue-400 text-[10px] sm:text-xs mt-0.5 sm:mt-1 md:hidden justify-start">
+  <Info size={10} className="sm:w-3 sm:h-3" strokeWidth={2} />
   <span>Know more</span>
 </Link>
 
@@ -307,14 +307,21 @@ const TimelineCard: React.FC<{
 const ProgressiveTimeline: React.FC = () => {
   const [lineProgress, setLineProgress] = useState(0);
   const [visibleSections, setVisibleSections] = useState<Set<number>>(new Set());
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Responsive spacing
-  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
-  const itemSpacing = isMobile ? 145 : 270;
+  const itemSpacing = isMobile ? 120 : 270;
   const totalItems = timelineData.length;
-  const timelineHeight = (totalItems - 1) * itemSpacing + (isMobile ? 100 : 140);
+  const timelineHeight = (totalItems - 1) * itemSpacing + (isMobile ? 80 : 140);
 
   useEffect(() => {
   const handleResize = () => {
@@ -374,22 +381,22 @@ const ProgressiveTimeline: React.FC = () => {
     <div className="bg-black min-h-screen">
 
       {/* Header Section */}
-      <section className="py-8 md:py-12 px-2 md:px-8 text-center relative z-10">
+      <section className="pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-6 sm:pb-8 md:pb-12 px-4 sm:px-6 md:px-8 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-6xl  text-white leading-tight mb-2 md:mb-6">
-            Crafted for <span className="text-blue-400">Success</span>
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-2 sm:mb-3 md:mb-6">
+            Resume  <span className="text-blue-400">Transformation</span>
           </h1>
           
-          <p className="text-base md:text-2xl text-gray-100 leading-relaxed mb-8 md:mb-4">
+          <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-100 leading-relaxed mb-6 sm:mb-8 md:mb-4 px-2">
             A structured 4-week program designed for professionals who demand 
             excellence and measurable results in their career advancement.
           </p>
         </div>
       </section>
 
-      <section ref={containerRef} className="py-8 md:py-2 px-4 md:px-8 relative">
+      <section ref={containerRef} className="py-6 sm:py-8 md:py-2 px-4 sm:px-6 md:px-8 relative">
         <div className="flex justify-center w-full">
-          <div ref={timelineRef} className="relative w-full max-w-6xl" style={{ minHeight: `${timelineHeight + 200}px` }}>
+          <div ref={timelineRef} className="relative w-full max-w-6xl" style={{ minHeight: `${timelineHeight + (isMobile ? 100 : 200)}px` }}>
 
             <ProgressiveLine 
               progress={lineProgress} 

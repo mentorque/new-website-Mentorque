@@ -12,6 +12,9 @@ import ResumeRebuild from './pages/ResumeRebuild';
 import CheatSheetPrep from './pages/CheatSheetPrep';
 import PortfolioTemplates from './pages/PortfolioTemplates';
 import MockInterview from '@/pages/MockInterview';
+import Structure from './pages/Structure';
+import SuccessStories from './pages/SuccessStories';
+import Testimonials from './pages/Testimonials';
 
 const queryClient = new QueryClient();
 
@@ -62,6 +65,9 @@ const App = () => (
           <Route path="/portfolio-templates" element={<PortfolioTemplates />} />
           <Route path="/cheat-sheet-prep" element={<CheatSheetPrep />} />
           <Route path="/mock-interviews" element={<MockInterview />} />
+          <Route path="/structure" element={<Structure />} />
+          <Route path="/success-stories" element={<SuccessStories />} />
+          <Route path="/testimonials" element={<Testimonials />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
