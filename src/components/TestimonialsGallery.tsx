@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react"
-import { ArrowUpRight, Calendar } from "lucide-react"
+import { useEffect, useMemo, useState, useRef } from "react"
+import { ArrowUpRight, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 import { Link } from "react-router-dom"
 
 const testimonialAssetModules = import.meta.glob<
@@ -64,15 +64,18 @@ const toTitle = (fileName: string) =>
 
 const toUniqueArray = <T,>(items: T[]) => Array.from(new Set(items))
 
-const TestimonialsGallery = () => {
-  const [isMobile, setIsMobile] = useState(false)
+const shuffleArray = <T,>(array: T[]) => {
+  const result = [...array]
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+  return result
+}
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
-  }, [])
+const TestimonialsGallery = () => {
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const testimonialImages = useMemo(() => {
     const entries = Object.entries(testimonialAssetModules) as [string, string][]
@@ -86,6 +89,17 @@ const TestimonialsGallery = () => {
     const source = testimonialImages.length ? testimonialImages : Array.from(fallbackImages)
     return toUniqueArray(source)
   }, [testimonialImages])
+
+  const shuffledImages = useMemo(() => {
+    if (!uniqueImages.length) {
+      return []
+    }
+    return shuffleArray(uniqueImages)
+  }, [uniqueImages])
+
+  useEffect(() => {
+    setCurrentIndex(0)
+  }, [shuffledImages])
 
   const spreadItems = useMemo(() => {
     if (!uniqueImages.length) {
@@ -109,16 +123,47 @@ const TestimonialsGallery = () => {
     })
   }, [uniqueImages])
 
-  const allImages = useMemo(() => uniqueImages, [uniqueImages])
+  const allImages = useMemo(() => shuffledImages, [shuffledImages])
 
-  const mobileImages = useMemo(() => {
+  const mobileItems = useMemo(() => {
     if (!allImages.length) return []
 
     const desiredCount = Math.max(5, Math.min(10, layoutSlots.length))
     const combined = allImages.length >= desiredCount ? allImages : toUniqueArray([...allImages, ...fallbackImages])
+    const images = combined.slice(0, desiredCount)
 
-    return combined.slice(0, desiredCount)
+    return images.map((image, index) => ({
+      image,
+      title: toTitle(image.split("/").pop() ?? `testimonial-${index + 1}`),
+      scale: 1,
+    }))
   }, [allImages])
+
+  useEffect(() => {
+    if (!mobileItems.length) {
+      setCurrentIndex(0)
+      return
+    }
+    if (currentIndex >= mobileItems.length) {
+      setCurrentIndex(0)
+    }
+  }, [mobileItems, currentIndex])
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index)
+  }
+
+  const nextSlide = () => {
+    if (!mobileItems.length) return
+    const newIndex = (currentIndex + 1) % mobileItems.length
+    setCurrentIndex(newIndex)
+  }
+
+  const prevSlide = () => {
+    if (!mobileItems.length) return
+    const newIndex = (currentIndex - 1 + mobileItems.length) % mobileItems.length
+    setCurrentIndex(newIndex)
+  }
 
   return (
     <section className="relative bg-black text-white overflow-hidden">
@@ -134,81 +179,121 @@ const TestimonialsGallery = () => {
 
       <div className="relative z-10 px-6 py-14 md:py-24 text-center">
         <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 leading-tight">
-        Peek inside their <span className="text-blue-400">chats & offers</span>
+          Peek inside their <span className="text-blue-400">chats & offers</span>
           <br />
         </h1>
         <p className="text-base sm:text-xl md:text-xl lg:text-2xl text-white/70 max-w-4xl mx-auto">
-        Real WhatsApp threads and Wins.
+          Real WhatsApp threads and Wins.
         </p>
       </div>
 
       <div className="relative w-full px-4 md:px-8 lg:px-12 pb-12 sm:pb-20 mb-8">
-        {isMobile ? (
-          <div className="flex gap-4 overflow-x-auto pb-8 snap-x snap-mandatory px-4">
-            {mobileImages.map((img, i) => (
-              <div
-                key={`row1-${i}`}
-                className="flex-none snap-center w-[66%] min-w-[204px] max-w-[272px]"
-              >
-                <div className="relative mx-auto flex items-center justify-center bg-zinc-900/70 backdrop-blur-md rounded-2xl overflow-hidden border border-zinc-800/60 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.65)] px-4 py-6 min-h-[187px]">
-                  <img
-                    src={img}
-                    alt={`Success story ${i + 1}`}
-                    className="max-w-full max-h-[221px] h-auto w-auto object-contain"
-                    loading="lazy"
-                    style={{ imageRendering: "auto", WebkitFontSmoothing: "antialiased" as any }}
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+        <div className="relative px-2 sm:px-4 md:px-8 md:hidden">
+          <div className="relative overflow-hidden">
+            <div
+              ref={carouselRef}
+              className="flex transition-transform duration-300 ease-in-out"
+              style={{
+                transform: `translateX(-${currentIndex * 100}%)`,
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+            >
+              {mobileItems.map((item, index) => (
+                <div key={index} className="min-w-full flex items-center justify-center py-4 sm:py-6">
+                  <div
+                    className="relative inline-block rounded"
+                    style={{
+                      transform: `scale(${item.scale})`,
+                    }}
+                  >
+                    <img
+                      src={item.image || "/placeholder.svg"}
+                      alt={item.title}
+                      className="block h-[250px] sm:h-[300px] max-w-[200px] sm:max-w-[280px] object-contain rounded"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex justify-center gap-6 mt-4 mb-2">
+            <button
+              onClick={prevSlide}
+              className="p-2.5 rounded-full bg-black/80"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-8 h-8 text-white" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="p-2.5 rounded-full bg-black/80"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-8 h-8 text-white" />
+            </button>
+          </div>
+
+          <div className="flex justify-center gap-2 mt-4">
+            {mobileItems.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  index === currentIndex ? "bg-white" : "bg-white/30"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
             ))}
           </div>
-        ) : (
-          <div
-            className="relative w-full"
-            style={{
-              minHeight: "120vh",
-            }}
-          >
-            {spreadItems.map((item, index) => (
+        </div>
+
+        <div
+          className="relative w-full hidden md:block"
+          style={{
+            minHeight: "120vh",
+          }}
+        >
+          {spreadItems.map((item, index) => (
+            <div
+              key={item.image + index}
+              className="absolute testimonial-item cursor-pointer group"
+              style={{
+                top: item.desktop.top,
+                left: item.desktop.left,
+                width: item.width,
+                opacity: 0,
+                animation: `fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${item.delay}s forwards`,
+                zIndex: 1,
+                willChange: "transform, opacity",
+              }}
+            >
               <div
-                key={item.image + index}
-                className="absolute testimonial-item cursor-pointer group"
+                className="relative bg-zinc-900/70 backdrop-blur-md rounded-2xl overflow-hidden border border-zinc-800/50 transition-all duration-500 ease-out shadow-[0_8px_30px_-8px_rgba(0,0,0,0.6)]"
                 style={{
-                  top: item.desktop.top,
-                  left: item.desktop.left,
-                  width: item.width,
-                  opacity: 0,
-                  animation: `fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${item.delay}s forwards`,
-                  zIndex: 1,
-                  willChange: "transform, opacity",
+                  transform: `rotate(${item.rotation}deg)`,
+                  transformOrigin: "center center",
+                  willChange: "transform, border-color, box-shadow",
                 }}
               >
-                <div
-                  className="relative bg-zinc-900/70 backdrop-blur-md rounded-2xl overflow-hidden border border-zinc-800/50 transition-all duration-500 ease-out shadow-[0_8px_30px_-8px_rgba(0,0,0,0.6)]"
+                <img
+                  src={item.image}
+                  alt={item.alt}
+                  className="w-full h-auto block transition-all duration-500"
+                  loading="lazy"
                   style={{
-                    transform: `rotate(${item.rotation}deg)`,
-                    transformOrigin: "center center",
-                    willChange: "transform, border-color, box-shadow",
+                    imageRendering: "auto",
+                    WebkitFontSmoothing: "antialiased" as any,
                   }}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.alt}
-                    className="w-full h-auto block transition-all duration-500"
-                    loading="lazy"
-                    style={{
-                      imageRendering: "auto",
-                      WebkitFontSmoothing: "antialiased" as any,
-                    }}
-                  />
+                />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="relative z-10 text-center pb-8 sm:pb-20 lg:pb-24 px-6">
