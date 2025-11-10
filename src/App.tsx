@@ -68,6 +68,7 @@ const App = () => (
           <Route path="/structure" element={<Structure />} />
           <Route path="/success-stories" element={<SuccessStories />} />
           <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/testimonial" element={<Testimonials />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
