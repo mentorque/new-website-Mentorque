@@ -112,20 +112,15 @@ const VideoTestimonials = () => {
     <section className="bg-black px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col items-center text-center gap-4">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.35em] text-white/70">
-            Real-time Wins
-          </span>
+        
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white">
             Luck favors the prepared. We prepare you.
           </h2>
-          <p className="text-white/70 text-base sm:text-lg md:text-xl">
-            Your next raise starts with this click.
-          </p>
 
           <Link to="/book-call" className="mt-6 inline-flex">
             <button className="group inline-flex items-center gap-3 bg-gradient-to-b from-white to-gray-100 hover:from-gray-50 hover:to-white text-black font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-2xl transition-all duration-300 shadow-[0_8px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_12px_40px_rgba(255,255,255,0.25)] hover:-translate-y-1 border border-white/20">
               <Calendar className="w-5 h-5" />
-              <span className="text-sm sm:text-base">Book a call</span>
+              <span className="text-sm sm:text-base">Your next raise starts with this click.</span>
               <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </button>
           </Link>

@@ -3,14 +3,14 @@
 import { useState, useEffect, useRef } from "react"
 
 export default function ScrollTextReveal() {
-  const [, setScrollY] = useState(0)
+  const [scrollY, setScrollY] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
 
   //job search
   // second job
 
   const text =
-    "The job search shouldn’t feel like a second job. All the late nights, endless tweaks, and silent inboxes can wear you down fast. We take the hassle and uncertainty off your plate, so you can focus on showing up and moving forward. The grind stops here."
+    "The job search shouldn’t feel like a second job. All the late nights, endless tweaks, and silent inboxes can wear you down fast. We take the hassle and uncertainty off your plate, so you can focus on showing up and    moving forward. The grind stops here."
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,9 +99,11 @@ export default function ScrollTextReveal() {
     
 
       {/* Single Text Section */}
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto">
         <div ref={sectionRef} className="min-h-[55vh] flex items-center justify-center text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light leading-tight">{renderTextWithHighlight(text)}</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-center">
+            {renderTextWithHighlight(text)}
+          </h2>
         </div>
       </div>
 

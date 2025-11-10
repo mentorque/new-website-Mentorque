@@ -411,7 +411,7 @@ export default function Weeks() {
   const isVideoSection = currentSectionData.type === "video"
 
   return (
-    <section className="bg-black py-8 sm:py-12 md:py-16">
+    <section className="bg-black pt-0 sm:pt-1 md:pt-2 pb-2 sm:pb-3 md:pb-4">
       <div ref={containerRef} className="relative" style={{ height: `${containerHeight}vh` }}>
         <div className="sticky top-0 flex items-center h-screen">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">

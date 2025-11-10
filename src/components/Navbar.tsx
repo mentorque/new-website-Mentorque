@@ -132,7 +132,7 @@ const Navbar = () => {
         {/* Mobile Navbar */}
         <div
           className={cn(
-            "md:hidden flex items-center justify-between w-full px-3 sm:px-4 py-2.5 rounded-xl transition-all duration-500 ease-out pointer-events-auto",
+            "md:hidden flex items-center justify-between w-[60%] px-3 sm:px-4 py-2.5 rounded-xl transition-all duration-500 ease-out pointer-events-auto mx-auto",
             "backdrop-blur-2xl bg-black/10 border border-white/10 shadow-2xl shadow-black/20",
             isScrolled ? "bg-black/20 border-white/20" : ""
           )}
@@ -163,7 +163,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-2 p-3 sm:p-4 rounded-xl backdrop-blur-2xl bg-black/10 border border-white/10 shadow-2xl shadow-black/20 pointer-events-auto">
+          <div className="md:hidden mt-2 p-3 sm:p-4 rounded-xl backdrop-blur-2xl bg-black/10 border border-white/10 shadow-2xl shadow-black/20 pointer-events-auto w-[60%] mx-auto">
             <div className="flex flex-col space-y-2.5">
               {navItems.map((item) => (
                 <Link

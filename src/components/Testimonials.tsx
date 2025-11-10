@@ -88,22 +88,6 @@ const TestimonialCarousel = () => {
       avatar: "/rigved.jpeg",
     },
     {
-      id: 7,
-      name: "Surbhi",
-      content:
-        "Frequent mentor calls pinpointed crucial issues, refined my application strategy, and helped me in getting 4-5 calls in 1 month.",
-      rating: 5,
-      avatar: "/surbhi.jpeg",
-    },
-    {
-      id: 8,
-      name: "SS Karthik",
-      content:
-        "Mentorque's steadfast approach and end to end mock interview calls helped me crack a role in Bosch.",
-      rating: 4,
-      avatar: "/ss.jpeg",
-    },
-    {
       id: 13,
       name: "Pramod",
       content:
@@ -120,6 +104,10 @@ const TestimonialCarousel = () => {
       avatar: "/Testimonials-People/udith-testimonial.jpeg",
     },
   ];
+
+  const uniqueTestimonials = regularTestimonials.filter((testimonial, index, self) => {
+    return index === self.findIndex((item) => item.id === testimonial.id)
+  })
   
 
   const scrollCarousel = (ref: React.RefObject<HTMLDivElement>, direction: "left" | "right") => {
@@ -169,7 +157,7 @@ const TestimonialCarousel = () => {
   )
 
   return (
-    <section className="py-24 md:py-32 bg-black overflow-hidden" id="testimonials">
+    <section className="pt-6 md:pt-8 pb-10 md:pb-12 bg-black overflow-hidden" id="testimonials">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
           
@@ -209,7 +197,7 @@ const TestimonialCarousel = () => {
               className="flex overflow-x-auto scrollbar-hide scroll-smooth px-4 md:px-16"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              {regularTestimonials.map((testimonial) => (
+              {uniqueTestimonials.map((testimonial) => (
                 <RegularTestimonialCard key={testimonial.id} testimonial={testimonial} />
               ))}
             </div>

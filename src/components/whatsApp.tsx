@@ -168,8 +168,9 @@ export default function TestimonialGallery({
 
       {/* Header Section */}
       <div className="text-center py-8 sm:py-16 md:py-24 px-6 relative z-10">
-        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white mb-7 leading-[1.1] tracking-tight font-normal">
-          {title ?? "People are Landing Interviews Fast."}
+      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 leading-tight">
+          People are Landing Interviews <span className="text-blue-400">Fast.</span>
+          <br />
         </h1>
         <p className="text-base sm:text-xl md:text-2xl lg:text-3xl text-white/60 mb-10 sm:mb-20 md:mb-24 font-light max-w-4xl mx-auto leading-relaxed">
           {subtitle ?? "Your next raise starts with this click."}

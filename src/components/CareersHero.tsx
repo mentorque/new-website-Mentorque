@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Sparkles, Flame } from 'lucide-react';
 
 const HERO_STATS = [
-  "Work at the most unique company in the world.",
   "1 in 30 applications shortlisted",
   "Avg time to 1st interview: 11.8 days",
   "Job Offer rate increased by 3.2x"
@@ -82,7 +81,7 @@ const CareersHero = () => {
     },
     {
       key: "mentorque-interior",
-      src: "/HeroCareers-Images/Amazon%20stock.jpg",
+      src: "/HeroCareers-Images/london%20stock%20photo.jpg",
       alt: "Modern workspace interior with warm lighting",
       gridClass: "order-5 md:order-5 lg:col-start-2 lg:row-start-2 justify-self-center",
       frameClass:
@@ -116,7 +115,7 @@ const CareersHero = () => {
     },
     {
       key: "london-twilight",
-      src: "/HeroCareers-Images/london%20stock%20photo.jpg",
+      src: "/HeroCareers-Images/Amazon%20stock.jpg",
       alt: "Modern cityscape from above in twilight",
       gridClass: "order-6 md:order-6 lg:col-start-3 lg:row-start-2 justify-self-end lg:self-end",
       frameClass:

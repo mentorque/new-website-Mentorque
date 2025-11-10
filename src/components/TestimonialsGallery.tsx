@@ -12,26 +12,26 @@ const testimonialAssetModules = import.meta.glob<
 })
 
 const layoutSlots = [
-  { rotation: -2, desktop: { top: "4%", left: "2%" }, width: "260px", delay: 0 },
-  { rotation: 1.5, desktop: { top: "6%", left: "22%" }, width: "265px", delay: 0.06 },
-  { rotation: -1.8, desktop: { top: "3%", left: "43%" }, width: "258px", delay: 0.12 },
-  { rotation: 2.2, desktop: { top: "5%", left: "64%" }, width: "262px", delay: 0.18 },
-  { rotation: -1.5, desktop: { top: "7%", left: "84%" }, width: "266px", delay: 0.24 },
-  { rotation: 2, desktop: { top: "30%", left: "3%" }, width: "263px", delay: 0.3 },
-  { rotation: -2.3, desktop: { top: "28%", left: "23%" }, width: "259px", delay: 0.36 },
-  { rotation: 1.7, desktop: { top: "31%", left: "44%" }, width: "264px", delay: 0.42 },
-  { rotation: -1.9, desktop: { top: "29%", left: "65%" }, width: "261px", delay: 0.48 },
-  { rotation: 2.1, desktop: { top: "32%", left: "85%" }, width: "267px", delay: 0.54 },
-  { rotation: -1.6, desktop: { top: "56%", left: "4%" }, width: "260px", delay: 0.6 },
-  { rotation: 2.4, desktop: { top: "54%", left: "24%" }, width: "265px", delay: 0.66 },
-  { rotation: -2, desktop: { top: "57%", left: "45%" }, width: "262px", delay: 0.72 },
-  { rotation: 1.8, desktop: { top: "55%", left: "66%" }, width: "263px", delay: 0.78 },
-  { rotation: -2.2, desktop: { top: "58%", left: "86%" }, width: "261px", delay: 0.84 },
-  { rotation: 1.9, desktop: { top: "82%", left: "2%" }, width: "264px", delay: 0.9 },
-  { rotation: -1.7, desktop: { top: "80%", left: "22%" }, width: "266px", delay: 0.96 },
-  { rotation: 2.3, desktop: { top: "83%", left: "43%" }, width: "259px", delay: 1.02 },
-  { rotation: -2.1, desktop: { top: "81%", left: "64%" }, width: "262px", delay: 1.08 },
-  { rotation: 1.6, desktop: { top: "84%", left: "84%" }, width: "265px", delay: 1.14 },
+  { rotation: -2, desktop: { top: "4%", left: "2%" }, width: "221px", delay: 0 },
+  { rotation: 1.5, desktop: { top: "6%", left: "22%" }, width: "225px", delay: 0.06 },
+  { rotation: -1.8, desktop: { top: "3%", left: "43%" }, width: "219px", delay: 0.12 },
+  { rotation: 2.2, desktop: { top: "5%", left: "64%" }, width: "223px", delay: 0.18 },
+  { rotation: -1.5, desktop: { top: "7%", left: "84%" }, width: "226px", delay: 0.24 },
+  { rotation: 2, desktop: { top: "30%", left: "3%" }, width: "224px", delay: 0.3 },
+  { rotation: -2.3, desktop: { top: "28%", left: "23%" }, width: "220px", delay: 0.36 },
+  { rotation: 1.7, desktop: { top: "31%", left: "44%" }, width: "224px", delay: 0.42 },
+  { rotation: -1.9, desktop: { top: "29%", left: "65%" }, width: "222px", delay: 0.48 },
+  { rotation: 2.1, desktop: { top: "32%", left: "85%" }, width: "227px", delay: 0.54 },
+  { rotation: -1.6, desktop: { top: "56%", left: "4%" }, width: "221px", delay: 0.6 },
+  { rotation: 2.4, desktop: { top: "54%", left: "24%" }, width: "225px", delay: 0.66 },
+  { rotation: -2, desktop: { top: "57%", left: "45%" }, width: "223px", delay: 0.72 },
+  { rotation: 1.8, desktop: { top: "55%", left: "66%" }, width: "224px", delay: 0.78 },
+  { rotation: -2.2, desktop: { top: "58%", left: "86%" }, width: "222px", delay: 0.84 },
+  { rotation: 1.9, desktop: { top: "82%", left: "2%" }, width: "224px", delay: 0.9 },
+  { rotation: -1.7, desktop: { top: "80%", left: "22%" }, width: "226px", delay: 0.96 },
+  { rotation: 2.3, desktop: { top: "83%", left: "43%" }, width: "220px", delay: 1.02 },
+  { rotation: -2.1, desktop: { top: "81%", left: "64%" }, width: "223px", delay: 1.08 },
+  { rotation: 1.6, desktop: { top: "84%", left: "84%" }, width: "225px", delay: 1.14 },
 ] as const
 
 const fallbackImages = [
@@ -62,6 +62,8 @@ const toTitle = (fileName: string) =>
     .replace(/\.[^/.]+$/, "")
     .trim()
 
+const toUniqueArray = <T,>(items: T[]) => Array.from(new Set(items))
+
 const TestimonialsGallery = () => {
   const [isMobile, setIsMobile] = useState(false)
 
@@ -81,11 +83,8 @@ const TestimonialsGallery = () => {
   }, [])
 
   const uniqueImages = useMemo(() => {
-    const source = testimonialImages.length
-      ? testimonialImages
-      : Array.from(fallbackImages)
-
-    return source.filter((image, index) => source.indexOf(image) === index)
+    const source = testimonialImages.length ? testimonialImages : Array.from(fallbackImages)
+    return toUniqueArray(source)
   }, [testimonialImages])
 
   const spreadItems = useMemo(() => {
@@ -114,8 +113,11 @@ const TestimonialsGallery = () => {
 
   const mobileImages = useMemo(() => {
     if (!allImages.length) return []
-    const loops = allImages.length >= 5 ? allImages : [...allImages, ...fallbackImages].slice(0, 10)
-    return loops
+
+    const desiredCount = Math.max(5, Math.min(10, layoutSlots.length))
+    const combined = allImages.length >= desiredCount ? allImages : toUniqueArray([...allImages, ...fallbackImages])
+
+    return combined.slice(0, desiredCount)
   }, [allImages])
 
   return (
@@ -131,15 +133,14 @@ const TestimonialsGallery = () => {
       />
 
       <div className="relative z-10 px-6 py-14 md:py-24 text-center">
-        <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl  leading-tight mb-6">
-          People are Landing Interviews{" "}
-          <span className="text-blue-500">Fast.</span>
-        </h2>
-        <p className="text-base sm:text-xl md:text-2xl lg:text-3xl text-white/70 max-w-4xl mx-auto">
-          Real offers, real WhatsApp threads, real wins on camera.
+        <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 leading-tight">
+        Peek inside their <span className="text-blue-400">chats & offers</span>
+          <br />
+        </h1>
+        <p className="text-base sm:text-xl md:text-xl lg:text-2xl text-white/70 max-w-4xl mx-auto">
+        Real WhatsApp threads and Wins.
         </p>
       </div>
-
 
       <div className="relative w-full px-4 md:px-8 lg:px-12 pb-12 sm:pb-20 mb-8">
         {isMobile ? (
@@ -147,20 +148,17 @@ const TestimonialsGallery = () => {
             {mobileImages.map((img, i) => (
               <div
                 key={`row1-${i}`}
-                className="flex-none snap-center w-[78%] min-w-[240px] max-w-[320px]"
+                className="flex-none snap-center w-[66%] min-w-[204px] max-w-[272px]"
               >
-                <div className="relative mx-auto flex items-center justify-center bg-zinc-900/70 backdrop-blur-md rounded-2xl overflow-hidden border border-zinc-800/60 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.65)] px-4 py-6 min-h-[220px]">
+                <div className="relative mx-auto flex items-center justify-center bg-zinc-900/70 backdrop-blur-md rounded-2xl overflow-hidden border border-zinc-800/60 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.65)] px-4 py-6 min-h-[187px]">
                   <img
                     src={img}
                     alt={`Success story ${i + 1}`}
-                    className="max-w-full max-h-[260px] h-auto w-auto object-contain"
+                    className="max-w-full max-h-[221px] h-auto w-auto object-contain"
                     loading="lazy"
                     style={{ imageRendering: "auto", WebkitFontSmoothing: "antialiased" as any }}
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3">
-                   
-                  </div>
                 </div>
               </div>
             ))}
@@ -206,10 +204,6 @@ const TestimonialsGallery = () => {
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                   
-                  </div>
                 </div>
               </div>
             ))}
@@ -283,4 +277,3 @@ const TestimonialsGallery = () => {
 }
 
 export default TestimonialsGallery
-
