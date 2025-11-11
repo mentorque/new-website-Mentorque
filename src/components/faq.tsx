@@ -14,15 +14,15 @@ const MentorqueFAQ = () => {
       content: [
         {
           subtitle: "Qualified Participants",
-          text: "Students and professionals seeking to land interviews, accelerate their career growth, use our tool and features and access 1-1 mentorship from industry experts are eligible to join our programs."
+          text: "Ambitious students and professionals who want faster interviews, sharper career momentum, and hands-on support from industry mentors are welcome to join. If you are ready to invest in your next opportunity, you are the right fit."
         },
         {
           subtitle: "How to Enroll",
-          text: "Visit our website to book a session or enroll onto our free 14 day trial period. We have a 14 day refund policy where the particapnts can choose to withdraw from the program, and any amount that they paid is refunded in full."
+          text: "Book a call on our website or start the complimentary 14-day trial. You are covered by a 14-day refund window—if you decide the program is not for you, cancel and receive a full refund."
         },
         {
           subtitle: "Program Availability",
-          text: "Enrollment is subject to mentor availability and program capacity. Only one mentorship program per participant can be active at a time."
+          text: "Enrollment depends on mentor availability and program capacity. Each participant can hold one active mentorship program at a time."
         }
       ]
     },

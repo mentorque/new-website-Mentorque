@@ -106,7 +106,7 @@ type TestimonialGalleryProps = {
 export default function TestimonialGallery({
   showGallery = false,
   maxPreviewImages = previewLayout.length,
-  title,
+  title: _title,
   subtitle,
   ctaHref = "/testimonials",
   ctaLabel = "View Testimonials",
@@ -222,7 +222,7 @@ export default function TestimonialGallery({
   }, [showGallery, testimonialImages])
 
   return (
-    <div className="bg-black min-h-[60vh] sm:min-h-[80vh] lg:min-h-screen relative overflow-hidden">
+    <div className="bg-black min-h-[60vh] sm:min-h-[80vh] lg:min-h-screen relative overflow-hidden pb-4 sm:pb-6">
       {/* Refined background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-950/8 via-black to-black"></div>
       
@@ -309,7 +309,7 @@ export default function TestimonialGallery({
                       width: `${mobileItems.length * 100}%`,
                     }}
                   >
-                    {mobileItems.map((item, index) => (
+                    {mobileItems.map((item) => (
                       <div key={item.key} className="min-w-full flex items-center justify-center py-6">
                         <div
                           className="relative inline-block rounded-2xl bg-zinc-900/70 backdrop-blur-md overflow-hidden border border-zinc-800/60 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.65)] px-2 py-4"
@@ -378,7 +378,7 @@ export default function TestimonialGallery({
       </div>
 
       {showGallery && galleryCards.length > 0 && (
-        <div className="relative z-10 px-6 pb-16 sm:pb-24">
+        <div className="relative z-10 px-6 pb-6 sm:pb-8">
           <div className="mx-auto flex max-w-6xl flex-col gap-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-sm font-semibold uppercase tracking-[0.35em] text-white/50 sm:text-base">
