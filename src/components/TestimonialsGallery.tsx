@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
 import { ArrowUpRight, Calendar } from "lucide-react"
-import { Link } from "react-router-dom"
-import MobileTestimonialsGallery from "./MobileTestimonialsGallery"
 
 const testimonialAssetModules = import.meta.glob<
   true,
@@ -13,26 +11,26 @@ const testimonialAssetModules = import.meta.glob<
 })
 
 const layoutSlots = [
-  { rotation: -2, desktop: { top: "4%", left: "2%" }, width: "221px", delay: 0 },
-  { rotation: 1.5, desktop: { top: "6%", left: "22%" }, width: "225px", delay: 0.06 },
+  { rotation: -2, desktop: { top: "4%", left: "10%" }, width: "221px", delay: 0 },
+  { rotation: 1.5, desktop: { top: "6%", left: "26%" }, width: "225px", delay: 0.06 },
   { rotation: -1.8, desktop: { top: "3%", left: "43%" }, width: "219px", delay: 0.12 },
-  { rotation: 2.2, desktop: { top: "5%", left: "64%" }, width: "223px", delay: 0.18 },
-  { rotation: -1.5, desktop: { top: "7%", left: "84%" }, width: "226px", delay: 0.24 },
-  { rotation: 2, desktop: { top: "30%", left: "3%" }, width: "224px", delay: 0.3 },
-  { rotation: -2.3, desktop: { top: "28%", left: "23%" }, width: "220px", delay: 0.36 },
-  { rotation: 1.7, desktop: { top: "31%", left: "44%" }, width: "224px", delay: 0.42 },
-  { rotation: -1.9, desktop: { top: "29%", left: "65%" }, width: "222px", delay: 0.48 },
-  { rotation: 2.1, desktop: { top: "32%", left: "85%" }, width: "227px", delay: 0.54 },
-  { rotation: -1.6, desktop: { top: "56%", left: "4%" }, width: "221px", delay: 0.6 },
-  { rotation: 2.4, desktop: { top: "54%", left: "24%" }, width: "225px", delay: 0.66 },
-  { rotation: -2, desktop: { top: "57%", left: "45%" }, width: "223px", delay: 0.72 },
-  { rotation: 1.8, desktop: { top: "55%", left: "66%" }, width: "224px", delay: 0.78 },
-  { rotation: -2.2, desktop: { top: "58%", left: "86%" }, width: "222px", delay: 0.84 },
-  { rotation: 1.9, desktop: { top: "82%", left: "2%" }, width: "224px", delay: 0.9 },
-  { rotation: -1.7, desktop: { top: "80%", left: "22%" }, width: "226px", delay: 0.96 },
-  { rotation: 2.3, desktop: { top: "83%", left: "43%" }, width: "220px", delay: 1.02 },
-  { rotation: -2.1, desktop: { top: "81%", left: "64%" }, width: "223px", delay: 1.08 },
-  { rotation: 1.6, desktop: { top: "84%", left: "84%" }, width: "225px", delay: 1.14 },
+  { rotation: 2.2, desktop: { top: "5%", left: "60%" }, width: "223px", delay: 0.18 },
+  { rotation: -1.5, desktop: { top: "7%", left: "76%" }, width: "226px", delay: 0.24 },
+  { rotation: 2, desktop: { top: "36.5%", left: "11%" }, width: "224px", delay: 0.3 },
+  { rotation: -2.3, desktop: { top: "34.5%", left: "27%" }, width: "220px", delay: 0.36 },
+  { rotation: 1.7, desktop: { top: "37.5%", left: "44%" }, width: "224px", delay: 0.42 },
+  { rotation: -1.9, desktop: { top: "35.5%", left: "61%" }, width: "222px", delay: 0.48 },
+  { rotation: 2.1, desktop: { top: "38.5%", left: "77%" }, width: "227px", delay: 0.54 },
+  { rotation: -1.6, desktop: { top: "69%", left: "12%" }, width: "221px", delay: 0.6 },
+  { rotation: 2.4, desktop: { top: "67%", left: "28%" }, width: "225px", delay: 0.66 },
+  { rotation: -2, desktop: { top: "70%", left: "45%" }, width: "223px", delay: 0.72 },
+  { rotation: 1.8, desktop: { top: "68%", left: "62%" }, width: "224px", delay: 0.78 },
+  { rotation: -2.2, desktop: { top: "71%", left: "78%" }, width: "222px", delay: 0.84 },
+  { rotation: 1.9, desktop: { top: "101.5%", left: "10%" }, width: "224px", delay: 0.9 },
+  { rotation: -1.7, desktop: { top: "99.5%", left: "26%" }, width: "226px", delay: 0.96 },
+  { rotation: 2.3, desktop: { top: "102.5%", left: "43%" }, width: "220px", delay: 1.02 },
+  { rotation: -2.1, desktop: { top: "100.5%", left: "60%" }, width: "223px", delay: 1.08 },
+  { rotation: 1.6, desktop: { top: "103.5%", left: "76%" }, width: "225px", delay: 1.14 },
 ] as const
 
 const fallbackImages = [
@@ -49,6 +47,29 @@ const fallbackImages = [
   "/screen/12.png",
   "/screen/14.png",
 ] as const
+
+const MobileTestimonialsGallery = () => {
+  return (
+    <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
+      {fallbackImages.slice(0, 8).map((img, i) => (
+        <div
+          key={i}
+          className="relative bg-zinc-900/70 backdrop-blur-md rounded-xl overflow-hidden border border-zinc-800/50 shadow-lg"
+          style={{
+            animation: `fadeInUp 0.6s ease-out ${i * 0.1}s both`,
+          }}
+        >
+          <img
+            src={img}
+            alt={`Testimonial ${i + 1}`}
+            className="w-full h-auto block"
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
 
 const naturalCompare = (a: string, b: string) =>
   a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
@@ -108,8 +129,9 @@ const TestimonialsGallery = () => {
   }, [])
 
   return (
-    <section className="relative bg-black text-white overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-950/8 via-black to-black" />
+    <section className="relative text-white overflow-hidden bg-gradient-to-br from-[#0b1120]/90 via-[#05070d]/95 to-[#020204]">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#020204] via-[#05070d]/60 to-[#020204]" />
+      <div className="absolute inset-x-0 top-0 h-40 sm:h-48 pointer-events-none bg-gradient-to-b from-[#020204] via-[#05070d]/80 to-transparent" />
       <div
         className="absolute inset-0 opacity-[0.015]"
         style={{
@@ -119,24 +141,23 @@ const TestimonialsGallery = () => {
         }}
       />
 
-      <div className="relative z-10 px-6 py-14 md:py-24 text-center">
-      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 leading-tight">
-        Peek inside their <span className="text-blue-400">chats & offers</span>
-          <br />
+      <div className="relative z-10 px-6 pt-14 pb-8 md:pt-20 md:pb-12 text-center">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-5 leading-tight font-bold">
+          Peek inside their <span className="text-blue-400">chats & offers</span>
         </h1>
-        <p className="text-base sm:text-xl md:text-xl lg:text-2xl text-white/70 max-w-4xl mx-auto">
-        Real WhatsApp threads and Wins.
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/70 max-w-4xl mx-auto">
+          Real WhatsApp threads and Wins.
         </p>
       </div>
 
-      <div className="relative w-full px-4 md:px-8 lg:px-12 pb-12 sm:pb-20 mb-8">
+      <div className="relative w-full px-4 md:px-8 lg:px-12 pb-8 md:pb-12">
         {isMobile ? (
           <MobileTestimonialsGallery />
         ) : (
           <div
             className="relative w-full"
             style={{
-              minHeight: "120vh",
+              minHeight: "130vh",
             }}
           >
             {spreadItems.map((item, index) => (
@@ -180,14 +201,12 @@ const TestimonialsGallery = () => {
         )}
       </div>
 
-      <div className="relative z-10 text-center pb-8 sm:pb-20 lg:pb-24 px-6">
-        <Link to="/book-call">
-          <button className="group inline-flex items-center gap-3 bg-gradient-to-b from-white to-gray-100 hover:from-gray-50 hover:to-white text-black font-semibold px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl transition-all duration-200 shadow-[0_6px_22px_rgba(255,255,255,0.12)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 border border-white/15">
-            <Calendar className="w-5 h-5" />
-            <span className="text-base sm:text-lg">Book Now</span>
-            <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </button>
-        </Link>
+      <div className="relative z-10 text-center pb-12 sm:pb-16 lg:pb-20 px-6">
+        <button className="group inline-flex items-center gap-3 bg-gradient-to-b from-white to-gray-100 hover:from-gray-50 hover:to-white text-black font-semibold px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl transition-all duration-200 shadow-[0_6px_22px_rgba(255,255,255,0.12)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 border border-white/15">
+          <Calendar className="w-5 h-5" />
+          <span className="text-base sm:text-lg">Book Now</span>
+          <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+        </button>
       </div>
 
       <style>{`

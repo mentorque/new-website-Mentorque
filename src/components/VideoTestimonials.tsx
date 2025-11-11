@@ -7,17 +7,17 @@ import { Play, Pause, Calendar, ArrowUpRight } from "lucide-react"
 const videoTestimonials = [
   {
     src: "/testinomial1.mp4",
-    title: "Clip 1",
+
     thumb: "/thumbnails/clip1.jpg",
   },
   {
     src: "/testinomial2.mp4",
-    title: "Clip 2",
+
     thumb: "/thumbnails/clip2.jpg",
   },
   {
     src: "/testinomial4.mp4",
-    title: "Clip 4",
+
     thumb: "/thumbnails/clip3.jpg",
   }
 ]
@@ -109,8 +109,9 @@ const VideoCard = ({ video, className = "" }) => {
 
 const VideoTestimonials = () => {
   return (
-    <section className="bg-black px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative overflow-hidden px-4 sm:px-6 lg:px-10 pt-16 sm:pt-20 pb-8 sm:pb-12 bg-gradient-to-br from-[#0b1120]/90 via-[#05070d]/95 to-[#020204]">
+      <div className="absolute inset-x-0 bottom-0 h-32 sm:h-40 pointer-events-none bg-gradient-to-b from-transparent via-[#020204]/75 to-[#020204]" />
+      <div className="relative max-w-6xl mx-auto">
         <div className="flex flex-col items-center text-center gap-4">
         
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-white">

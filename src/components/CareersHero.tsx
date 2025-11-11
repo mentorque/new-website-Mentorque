@@ -176,7 +176,7 @@ const CareersHero = () => {
   }, [displayText, isHolding, currentStat, stats.length]);
 
   return (
-    <div className="relative w-full min-h-[60vh] sm:min-h-[70vh] lg:min-h-[90vh] xl:min-h-screen bg-black overflow-hidden py-8 sm:py-16 md:py-20">
+    <div className="relative w-full min-h-[60vh] sm:min-h-[70vh] lg:min-h-[90vh] xl:min-h-screen overflow-hidden py-8 sm:py-16 md:py-20 bg-gradient-to-br from-[#0b1120]/95 via-[#05070d]/97 to-[#020204]/98">
       {/* Large "JOB" text background */}
   
       

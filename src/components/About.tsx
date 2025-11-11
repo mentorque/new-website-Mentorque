@@ -91,8 +91,8 @@ const About = () => {
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
           <p className="text-sm sm:text-base md:text-lg lg:text-xl m-2 sm:m-3 text-gray-400 tracking-wider">WELCOME TO</p>
 
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-4 sm:mb-6 md:mb-8 px-2">
-            Turning Point of Your <span className="text-blue-400 drop-shadow-lg">Job Hunt</span>
+          <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 leading-tight">
+          Turning Point of Your <span className="text-blue-400 drop-shadow-lg">Job Hunt</span>
           </h1>
         </div>
 
@@ -143,8 +143,8 @@ const About = () => {
             }`}
             style={{ transitionDelay: visible ? "800ms" : "0ms" }}
           >
-            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-4 sm:mb-6 md:mb-8 px-2">
-              Betting on <span className="text-blue-400 drop-shadow-lg"> Yourself ?</span>
+      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 md:mt-8 leading-tight">
+      Betting on <span className="text-blue-400 drop-shadow-lg"> Yourself ?</span>
             </h1>
             <a
               href="/book-call"
