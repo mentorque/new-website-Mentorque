@@ -1,5 +1,5 @@
-import { ReactNode, useMemo } from "react"
-import { ArrowUpRight, Calendar } from "lucide-react"
+import { ReactNode, useMemo, useEffect, useState, useRef, useCallback } from "react"
+import { ArrowUpRight, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 import { Link } from "react-router-dom"
 
 const testimonialAssetModules = import.meta.glob<
@@ -139,6 +139,73 @@ export default function TestimonialGallery({
     return buildPreviewCards(images)
   }, [maxPreviewImages, testimonialImages])
 
+  const [isMobile, setIsMobile] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false
+    return window.innerWidth < 768
+  })
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  const mobileItems = useMemo(
+    () =>
+      previewCards.map((card, index) => ({
+        image: card.image,
+        title: card.alt,
+        scale: 1,
+        key: `${card.image}-${index}`,
+      })),
+    [previewCards],
+  )
+
+  useEffect(() => {
+    setCurrentIndex(0)
+  }, [isMobile, mobileItems.length])
+
+  const scrollToImage = useCallback(
+    (index: number) => {
+    if (carouselRef.current) {
+        const containerWidth = carouselRef.current.offsetWidth
+        const scrollAmount = index * containerWidth
+        carouselRef.current.scrollTo({
+          left: scrollAmount,
+          behavior: "smooth",
+        })
+      }
+    },
+    [carouselRef],
+  )
+
+  const goToSlide = useCallback(
+    (index: number) => {
+      setCurrentIndex(index)
+      scrollToImage(index)
+    },
+    [scrollToImage],
+  )
+
+  const nextSlide = useCallback(() => {
+    if (!mobileItems.length) return
+    const newIndex = (currentIndex + 1) % mobileItems.length
+    setCurrentIndex(newIndex)
+    scrollToImage(newIndex)
+  }, [currentIndex, mobileItems.length, scrollToImage])
+
+  const prevSlide = useCallback(() => {
+    if (!mobileItems.length) return
+    const newIndex = (currentIndex - 1 + mobileItems.length) % mobileItems.length
+    setCurrentIndex(newIndex)
+    scrollToImage(newIndex)
+  }, [currentIndex, mobileItems.length, scrollToImage])
+
   const galleryCards = useMemo(() => {
     if (!showGallery) {
       return []
@@ -177,15 +244,15 @@ export default function TestimonialGallery({
         </p>
 
         <div className="flex flex-col items-center">
-            {/* Preview Cards - 60% visible from top */}
-            <div 
-              className="relative mb-0 preview-cards-container" 
-              style={{ 
-                height: '140px', 
-                width: '100%', 
-                maxWidth: '850px', 
-                overflow: 'visible',
-                perspective: '1200px'
+            {/* Preview Cards - Desktop */}
+            <div
+              className="relative mb-0 preview-cards-container hidden md:block"
+              style={{
+                height: "140px",
+                width: "100%",
+                maxWidth: "850px",
+                overflow: "visible",
+                perspective: "1200px",
               }}
             >
               {previewCards.map((card, index) => (
@@ -195,37 +262,105 @@ export default function TestimonialGallery({
                   style={{
                     transform: `translateX(calc(-50% + ${card.translateX}px)) translateY(40%) rotate(${card.rotation}deg) scale(${card.scale})`,
                     zIndex: card.zIndex,
-                    width: '210px',
-                    height: '300px',
-                    transformStyle: 'preserve-3d',
-                    willChange: 'transform, z-index',
-                    transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0.3s ease-out'
+                    width: "210px",
+                    height: "300px",
+                    transformStyle: "preserve-3d",
+                    willChange: "transform, z-index",
+                    transition:
+                      "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0.3s ease-out",
                   }}
                 >
-                  <div 
+                  <div
                     className="relative w-full h-full bg-zinc-900/95 backdrop-blur-lg rounded-2xl overflow-hidden shadow-[0_25px_70px_-20px_rgba(0,0,0,0.9)] border border-zinc-700/70 transition-all duration-700 group-hover:border-zinc-500 group-hover:shadow-[0_30px_80px_-15px_rgba(0,0,0,1)]"
                     style={{
-                      animation: `previewFloat 4s ease-in-out ${index * 0.4}s infinite, previewPop 5s ease-in-out ${index * 0.5}s infinite`
+                      animation: `previewFloat 4s ease-in-out ${index * 0.4}s infinite, previewPop 5s ease-in-out ${index * 0.5}s infinite`,
                     }}
                   >
                     <img
                       src={card.image}
                       alt={card.alt}
                       className="w-full h-full object-cover object-top"
-                      style={{ 
-                        imageRendering: 'auto' as const,
-                        WebkitFontSmoothing: 'antialiased' as any
+                      style={{
+                        imageRendering: "auto" as const,
+                        WebkitFontSmoothing: "antialiased" as any,
                       }}
                     />
                     {/* Refined overlay gradient */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/40 transition-opacity duration-700 group-hover:opacity-80"></div>
-                    
+
                     {/* Subtle shimmer effect */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 preview-shimmer"></div>
                   </div>
                 </div>
               ))}
             </div>
+
+            {/* Mobile Carousel */}
+            <div className="w-full md:hidden mt-4">
+              <div className="relative px-2">
+                <div
+                  className="relative overflow-hidden rounded-2xl bg-black/20 border border-white/10"
+                  ref={carouselRef}
+                >
+                  <div
+                    className="flex transition-transform duration-300 ease-in-out"
+                    style={{
+                      transform: `translateX(-${currentIndex * 100}%)`,
+                      width: `${mobileItems.length * 100}%`,
+                    }}
+                  >
+                    {mobileItems.map((item, index) => (
+                      <div key={item.key} className="min-w-full flex items-center justify-center py-6">
+                        <div
+                          className="relative inline-block rounded-2xl bg-zinc-900/70 backdrop-blur-md overflow-hidden border border-zinc-800/60 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.65)] px-2 py-4"
+                          style={{
+                            transform: `scale(${item.scale})`,
+                          }}
+                        >
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="block h-[340px] max-w-[240px] object-contain rounded-xl mx-auto"
+                            loading="lazy"
+                            style={{ imageRendering: "auto", WebkitFontSmoothing: "antialiased" as any }}
+                          />
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex justify-center gap-6 mt-4">
+                  <button
+                    onClick={prevSlide}
+                    className="p-3 rounded-full bg-black/80 border border-white/10"
+                    aria-label="Previous testimonial"
+                  >
+                    <ChevronLeft className="w-6 h-6 text-white" />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    className="p-3 rounded-full bg-black/80 border border-white/10"
+                    aria-label="Next testimonial"
+                  >
+                    <ChevronRight className="w-6 h-6 text-white" />
+                  </button>
+                </div>
+
+                <div className="flex justify-center gap-2 mt-3">
+                  {mobileItems.map((_, index) => (
+                    <button
+                      key={`dot-${index}`}
+                      onClick={() => goToSlide(index)}
+                      className={`w-2.5 h-2.5 rounded-full transition-colors ${index === currentIndex ? "bg-white" : "bg-white/30"}`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
 
             {/* CTA Button */}
             <Link
