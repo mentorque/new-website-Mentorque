@@ -1,5 +1,5 @@
-import { ReactNode, useMemo, useEffect, useState, useRef, useCallback } from "react"
-import { ArrowUpRight, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
+import { ReactNode, useMemo } from "react"
+import { ArrowUpRight, Calendar } from "lucide-react"
 import { Link } from "react-router-dom"
 
 const testimonialAssetModules = import.meta.glob<
@@ -139,73 +139,6 @@ export default function TestimonialGallery({
     return buildPreviewCards(images)
   }, [maxPreviewImages, testimonialImages])
 
-  const [isMobile, setIsMobile] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false
-    return window.innerWidth < 768
-  })
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
-
-  const carouselRef = useRef<HTMLDivElement>(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const mobileItems = useMemo(
-    () =>
-      previewCards.map((card, index) => ({
-        image: card.image,
-        title: card.alt,
-        scale: 1,
-        key: `${card.image}-${index}`,
-      })),
-    [previewCards],
-  )
-
-  useEffect(() => {
-    setCurrentIndex(0)
-  }, [isMobile, mobileItems.length])
-
-  const scrollToImage = useCallback(
-    (index: number) => {
-    if (carouselRef.current) {
-        const containerWidth = carouselRef.current.offsetWidth
-        const scrollAmount = index * containerWidth
-        carouselRef.current.scrollTo({
-          left: scrollAmount,
-          behavior: "smooth",
-        })
-      }
-    },
-    [carouselRef],
-  )
-
-  const goToSlide = useCallback(
-    (index: number) => {
-      setCurrentIndex(index)
-      scrollToImage(index)
-    },
-    [scrollToImage],
-  )
-
-  const nextSlide = useCallback(() => {
-    if (!mobileItems.length) return
-    const newIndex = (currentIndex + 1) % mobileItems.length
-    setCurrentIndex(newIndex)
-    scrollToImage(newIndex)
-  }, [currentIndex, mobileItems.length, scrollToImage])
-
-  const prevSlide = useCallback(() => {
-    if (!mobileItems.length) return
-    const newIndex = (currentIndex - 1 + mobileItems.length) % mobileItems.length
-    setCurrentIndex(newIndex)
-    scrollToImage(newIndex)
-  }, [currentIndex, mobileItems.length, scrollToImage])
-
   const galleryCards = useMemo(() => {
     if (!showGallery) {
       return []
@@ -244,9 +177,9 @@ export default function TestimonialGallery({
         </p>
 
         <div className="flex flex-col items-center">
-            {/* Preview Cards - Desktop */}
+            {/* Preview Cards */}
             <div
-              className="relative mb-0 preview-cards-container hidden md:block"
+              className="relative mb-0 preview-cards-container w-full"
               style={{
                 height: "140px",
                 width: "100%",
@@ -294,73 +227,6 @@ export default function TestimonialGallery({
                 </div>
               ))}
             </div>
-
-            {/* Mobile Carousel */}
-            <div className="w-full md:hidden mt-4">
-              <div className="relative px-2">
-                <div
-                  className="relative overflow-hidden rounded-2xl bg-black/20 border border-white/10"
-                  ref={carouselRef}
-                >
-                  <div
-                    className="flex transition-transform duration-300 ease-in-out"
-                    style={{
-                      transform: `translateX(-${currentIndex * 100}%)`,
-                      width: `${mobileItems.length * 100}%`,
-                    }}
-                  >
-                    {mobileItems.map((item) => (
-                      <div key={item.key} className="min-w-full flex items-center justify-center py-6">
-                        <div
-                          className="relative inline-block rounded-2xl bg-zinc-900/70 backdrop-blur-md overflow-hidden border border-zinc-800/60 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.65)] px-2 py-4"
-                          style={{
-                            transform: `scale(${item.scale})`,
-                          }}
-                        >
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="block h-[340px] max-w-[240px] object-contain rounded-xl mx-auto"
-                            loading="lazy"
-                            style={{ imageRendering: "auto", WebkitFontSmoothing: "antialiased" as any }}
-                          />
-                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex justify-center gap-6 mt-4">
-                  <button
-                    onClick={prevSlide}
-                    className="p-3 rounded-full bg-black/80 border border-white/10"
-                    aria-label="Previous testimonial"
-                  >
-                    <ChevronLeft className="w-6 h-6 text-white" />
-                  </button>
-                  <button
-                    onClick={nextSlide}
-                    className="p-3 rounded-full bg-black/80 border border-white/10"
-                    aria-label="Next testimonial"
-                  >
-                    <ChevronRight className="w-6 h-6 text-white" />
-                  </button>
-                </div>
-
-                <div className="flex justify-center gap-2 mt-3">
-                  {mobileItems.map((_, index) => (
-                    <button
-                      key={`dot-${index}`}
-                      onClick={() => goToSlide(index)}
-                      className={`w-2.5 h-2.5 rounded-full transition-colors ${index === currentIndex ? "bg-white" : "bg-white/30"}`}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
 
             {/* CTA Button */}
             <Link
