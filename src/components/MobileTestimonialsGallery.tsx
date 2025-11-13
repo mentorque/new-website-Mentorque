@@ -2,21 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-
-const testimonialAssetModules = import.meta.glob<
-  true,
-  string,
-  string
->("/public/Whatsapp_testimonial_screenshots/*.{png,jpg,jpeg,webp}", {
-  as: "url",
-  eager: true,
-})
+import { getWhatsAppTestimonials } from "@/data/whatsappTestimonials"
 
 const naturalCompare = (a: string, b: string) =>
   a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
-
-const sanitisePublicUrl = (url: string) =>
-  url.startsWith("/public/") ? url.replace("/public", "") : url
 
 const toUniqueArray = <T,>(items: T[]) => Array.from(new Set(items))
 
@@ -48,13 +37,8 @@ const MobileTestimonialsGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const testimonialImages = useMemo(() => {
-    const entries = Object.entries(testimonialAssetModules) as [string, string][]
-
-    const sorted = entries
-      .sort(([a], [b]) => naturalCompare(a, b))
-      .map(([, url]) => sanitisePublicUrl(url))
-
-    return sorted.length ? sorted : Array.from(fallbackImages)
+    const images = getWhatsAppTestimonials().sort(naturalCompare)
+    return images.length ? images : Array.from(fallbackImages)
   }, [])
 
   const uniqueImages = useMemo(
@@ -157,4 +141,3 @@ const MobileTestimonialsGallery = () => {
 }
 
 export default MobileTestimonialsGallery
-
