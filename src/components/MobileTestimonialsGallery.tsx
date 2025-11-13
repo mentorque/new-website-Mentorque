@@ -1,8 +1,12 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
+import type { ReactEventHandler } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { getWhatsAppTestimonials } from "@/data/whatsappTestimonials"
+import {
+  getWhatsAppTestimonials,
+  WHATSAPP_TESTIMONIAL_IMAGES,
+} from "@/data/whatsappTestimonials"
 
 const naturalCompare = (a: string, b: string) =>
   a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
@@ -16,25 +20,25 @@ const toTitle = (fileName: string) =>
     .replace(/\.[^/.]+$/, "")
     .trim()
 
-const fallbackImages = [
-  "/screen/imp1.jpg",
-  "/screen/15.png",
-  "/screen/16.png",
-  "/screen/17.png",
-  "/screen/18.jpeg",
-  "/screen/19.jpeg",
-  "/screen/20.jpeg",
-  "/screen/6.jpg",
-  "/screen/7.jpg",
-  "/screen/10.jpg",
-  "/screen/12.png",
-  "/screen/14.png",
-] as const
+const fallbackImages = WHATSAPP_TESTIMONIAL_IMAGES
+const FALLBACK_PLACEHOLDER = "/placeholder.svg"
 
+const handleImageError: ReactEventHandler<HTMLImageElement> = (event) => {
+  const img = event.currentTarget
+
+  if (img.dataset.fallbackApplied === "true") {
+    return
+  }
+
+  img.dataset.fallbackApplied = "true"
+  img.src = FALLBACK_PLACEHOLDER
+}
 
 const MobileTestimonialsGallery = () => {
   const carouselRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   const testimonialImages = useMemo(() => {
     const images = getWhatsAppTestimonials().sort(naturalCompare)
@@ -64,45 +68,63 @@ const MobileTestimonialsGallery = () => {
   }, [mobileItems.length])
 
   const goToSlide = (index: number) => {
+    if (isTransitioning) return
+    setIsTransitioning(true)
     setCurrentIndex(index)
+    setTimeout(() => setIsTransitioning(false), 350)
   }
 
   const nextSlide = () => {
-    if (!mobileItems.length) return
+    if (!mobileItems.length || isTransitioning) return
+    setIsTransitioning(true)
     const newIndex = (currentIndex + 1) % mobileItems.length
     setCurrentIndex(newIndex)
+    setTimeout(() => setIsTransitioning(false), 350)
   }
 
   const prevSlide = () => {
-    if (!mobileItems.length) return
+    if (!mobileItems.length || isTransitioning) return
+    setIsTransitioning(true)
     const newIndex = (currentIndex - 1 + mobileItems.length) % mobileItems.length
     setCurrentIndex(newIndex)
+    setTimeout(() => setIsTransitioning(false), 350)
   }
 
   return (
     <div className="relative px-2 sm:px-3">
       <div
         className="relative overflow-hidden rounded-2xl bg-black/10 border border-white/10"
-        ref={carouselRef}
+        ref={containerRef}
       >
         <div
-          className="flex w-full transition-transform duration-300 ease-in-out"
+          ref={carouselRef}
+          className="flex transition-transform duration-300 ease-out"
           style={{
             transform: `translateX(-${currentIndex * 100}%)`,
-            width: `${mobileItems.length * 100}%`,
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
+            touchAction: 'pan-y pinch-zoom',
           }}
         >
           {mobileItems.map((item, index) => (
-            <div key={item.image + index} className="flex w-full justify-center py-5">
+            <div
+              key={item.image + index}
+              className="flex-shrink-0 w-full flex justify-center py-5 px-2"
+              style={{ minWidth: '100%' }}
+            >
               <div className="relative rounded-2xl bg-zinc-900/70 backdrop-blur-md overflow-hidden border border-zinc-800/60 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.65)] px-5 py-6">
                 <img
-                  src={item.image || "/placeholder.svg"}
+                  src={item.image || FALLBACK_PLACEHOLDER}
                   alt={item.title}
-                  className="block h-[360px] sm:h-[432px] max-w-[288px] sm:max-w-[403px] object-contain rounded-xl transition-transform duration-500"
+                  className="block h-[360px] sm:h-[432px] w-auto max-w-[288px] sm:max-w-[403px] object-contain rounded-xl mx-auto"
                   loading="lazy"
-                  style={{ imageRendering: "auto", WebkitFontSmoothing: "antialiased" as any }}
+                  decoding="async"
+                  onError={handleImageError}
+                  style={{ 
+                    imageRendering: "auto", 
+                    WebkitFontSmoothing: "antialiased" as any,
+                    userSelect: 'none',
+                    pointerEvents: 'none'
+                  }}
+                  draggable={false}
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
               </div>
@@ -112,14 +134,16 @@ const MobileTestimonialsGallery = () => {
 
         <button
           onClick={prevSlide}
-          className="absolute left-2.5 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/80 border border-white/10"
+          disabled={isTransitioning}
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/80 border border-white/10 hover:bg-black/90 active:scale-95 transition-all disabled:opacity-50 z-10"
           aria-label="Previous image"
         >
           <ChevronLeft className="w-6 h-6 text-white" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-2.5 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/80 border border-white/10"
+          disabled={isTransitioning}
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/80 border border-white/10 hover:bg-black/90 active:scale-95 transition-all disabled:opacity-50 z-10"
           aria-label="Next image"
         >
           <ChevronRight className="w-6 h-6 text-white" />
@@ -131,7 +155,8 @@ const MobileTestimonialsGallery = () => {
           <button
             key={`dot-${index}`}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? "bg-white" : "bg-white/30"}`}
+            disabled={isTransitioning}
+            className={`w-2 h-2 rounded-full transition-colors disabled:cursor-not-allowed ${index === currentIndex ? "bg-white" : "bg-white/30"}`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

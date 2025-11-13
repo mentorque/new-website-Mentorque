@@ -1,4 +1,4 @@
-const WHATSAPP_TESTIMONIAL_IMAGES = [
+export const WHATSAPP_TESTIMONIAL_IMAGES = [
   "/Whatsapp_testimonial_screenshots/1.jpeg",
   "/Whatsapp_testimonial_screenshots/1.png",
   "/Whatsapp_testimonial_screenshots/2.png",
@@ -17,11 +17,36 @@ const WHATSAPP_TESTIMONIAL_IMAGES = [
   "/Whatsapp_testimonial_screenshots/imp2.PNG",
 ] as const
 
+const testimonialAssetModules = import.meta.glob<
+  true,
+  string,
+  string
+>("/public/Whatsapp_testimonial_screenshots/*.{png,jpg,jpeg,webp}", {
+  as: "url",
+  eager: true,
+})
+
+const naturalCompare = (a: string, b: string) =>
+  a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
+
+const sanitisePublicUrl = (url: string) =>
+  url.startsWith("/public/") ? url.replace("/public", "") : url
+
 /**
- * Returns a copy of the WhatsApp testimonial image paths.
- * Keeping this in a single place ensures every component works off the same source.
+ * Returns a list of WhatsApp testimonial image paths.
+ * Uses the bundled asset list when available and falls back to the static list.
  */
-export const getWhatsAppTestimonials = () => [...WHATSAPP_TESTIMONIAL_IMAGES]
+export const getWhatsAppTestimonials = () => {
+  const entries = Object.entries(testimonialAssetModules) as [string, string][]
+
+  if (!entries.length) {
+    return [...WHATSAPP_TESTIMONIAL_IMAGES]
+  }
+
+  return entries
+    .sort(([a], [b]) => naturalCompare(a, b))
+    .map(([, url]) => sanitisePublicUrl(url))
+}
 
 
 

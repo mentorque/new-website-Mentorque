@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { ArrowUpRight, Calendar } from "lucide-react"
+import MobileTestimonialsGallery from "@/components/MobileTestimonialsGallery"
 
 const testimonialAssetModules = import.meta.glob<
   true,
@@ -47,29 +48,6 @@ const fallbackImages = [
   "/screen/12.png",
   "/screen/14.png",
 ] as const
-
-const MobileTestimonialsGallery = () => {
-  return (
-    <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-      {fallbackImages.slice(0, 8).map((img, i) => (
-        <div
-          key={i}
-          className="relative bg-zinc-900/70 backdrop-blur-md rounded-xl overflow-hidden border border-zinc-800/50 shadow-lg"
-          style={{
-            animation: `fadeInUp 0.6s ease-out ${i * 0.1}s both`,
-          }}
-        >
-          <img
-            src={img}
-            alt={`Testimonial ${i + 1}`}
-            className="w-full h-auto block"
-            loading="lazy"
-          />
-        </div>
-      ))}
-    </div>
-  )
-}
 
 const naturalCompare = (a: string, b: string) =>
   a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
