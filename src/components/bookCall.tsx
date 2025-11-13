@@ -165,9 +165,7 @@ function BookCall() {
             </span>
             <span>for free.</span>
           </h2>
-          <p className="mt-2 text-base lg:text-lg text-gray-600 text-center font-medium">
-            Book the First Call for Free
-          </p>
+         
         </div>
       </div>
 
@@ -298,7 +296,7 @@ function BookCall() {
                     </>
                   ) : (
                     <>
-                      <span>Book Call</span>
+                      <span>Start for Free</span>
                       <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>

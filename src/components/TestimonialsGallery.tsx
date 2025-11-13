@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { ArrowUpRight, Calendar } from "lucide-react"
+import { Link } from "react-router-dom"
 import MobileTestimonialsGallery from "@/components/MobileTestimonialsGallery"
 
 const testimonialAssetModules = import.meta.glob<
@@ -180,11 +181,13 @@ const TestimonialsGallery = () => {
       </div>
 
       <div className="relative z-10 text-center pb-12 sm:pb-16 lg:pb-20 px-6">
-        <button className="group inline-flex items-center gap-3 bg-gradient-to-b from-white to-gray-100 hover:from-gray-50 hover:to-white text-black font-semibold px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl transition-all duration-200 shadow-[0_6px_22px_rgba(255,255,255,0.12)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 border border-white/15">
-          <Calendar className="w-5 h-5" />
-          <span className="text-base sm:text-lg">Book Now</span>
-          <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-        </button>
+        <Link to="/book-call">
+          <button className="group inline-flex items-center gap-3 bg-gradient-to-b from-white to-gray-100 hover:from-gray-50 hover:to-white text-black font-semibold px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl transition-all duration-200 shadow-[0_6px_22px_rgba(255,255,255,0.12)] hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 border border-white/15">
+            <Calendar className="w-5 h-5" />
+            <span className="text-base sm:text-lg">Book Now</span>
+            <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+          </button>
+        </Link>
       </div>
 
       <style>{`

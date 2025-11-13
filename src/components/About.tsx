@@ -143,7 +143,7 @@ const About = () => {
             }`}
             style={{ transitionDelay: visible ? "800ms" : "0ms" }}
           >
-      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 md:mt-8 leading-tight">
+      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 mt-16 md:mt-8 leading-tight">
       Betting on <span className="text-blue-400 drop-shadow-lg"> Yourself ?</span>
             </h1>
             <a
