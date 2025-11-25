@@ -100,7 +100,7 @@ export default function ScrollTextReveal() {
 
       {/* Single Text Section */}
       <div className="max-w-5xl mx-auto">
-        <div ref={sectionRef} className="min-h-[55vh] flex items-center justify-center text-center">
+        <div ref={sectionRef} className="min-h-[40vh] flex items-center justify-center text-center pt-8 sm:pt-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-center">
             {renderTextWithHighlight(text)}
           </h2>
