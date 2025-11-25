@@ -155,7 +155,7 @@ export default function TestimonialGallery({
   }, [showGallery, testimonialImages])
 
   return (
-    <div className="bg-black min-h-[60vh] sm:min-h-[80vh] lg:min-h-screen relative overflow-hidden pb-4 sm:pb-6">
+    <div className="bg-black min-h-[60vh] sm:min-h-[80vh] lg:min-h-screen relative overflow-hidden pb-0">
       {/* Refined background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-950/8 via-black to-black"></div>
       
@@ -167,7 +167,7 @@ export default function TestimonialGallery({
       }}></div>
 
       {/* Header Section */}
-      <div className="text-center py-8 sm:py-16 md:py-24 px-6 relative z-10">
+      <div className="text-center pt-8 sm:pt-16 md:pt-24 pb-4 sm:pb-6 md:pb-8 px-6 relative z-10">
       <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-8 leading-tight">
           People are Landing Interviews <span className="text-blue-400">Fast.</span>
           <br />
@@ -231,7 +231,7 @@ export default function TestimonialGallery({
             {/* CTA Button */}
             <Link
               to={ctaHref}
-              className="mt-6 flex items-center justify-center group w-full sm:w-auto text-center bg-gray-900 text-white hover:bg-black font-semibold py-2.5 sm:py-3 md:py-4 px-5 sm:px-6 md:px-8 lg:px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] text-sm sm:text-base md:text-lg z-10"
+              className="mt-32 sm:mt-36 md:mt-40 flex items-center justify-center group w-full sm:w-auto text-center bg-white text-black hover:bg-gray-100 font-semibold py-2.5 sm:py-3 md:py-4 px-5 sm:px-6 md:px-8 lg:px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] text-sm sm:text-base md:text-lg z-10"
             >
               <Calendar className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
               {ctaLabel}
