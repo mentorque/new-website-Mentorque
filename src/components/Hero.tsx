@@ -120,11 +120,11 @@ const Hero = () => {
                       style={{ animationDelay: "0.7s" }}
                     >
                       <Link
-  to="/book-call"
+  to="/testimonials"
   className="flex items-center justify-center group w-full sm:w-auto text-center bg-gray-900 text-white hover:bg-black font-semibold py-3 sm:py-4 px-6 sm:px-8 lg:px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] text-base sm:text-lg"
 >
   <Calendar className="mr-2 sm:mr-3 w-5 h-5 sm:w-6 sm:h-6" />
-  Book Free Session
+  View Testimonial
   <ArrowUpRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:translate-x-1" />
 </Link>
                     </div>
