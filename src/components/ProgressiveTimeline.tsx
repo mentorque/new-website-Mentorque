@@ -381,22 +381,22 @@ const ProgressiveTimeline: React.FC = () => {
     <div className="bg-black min-h-screen">
 
       {/* Header Section */}
-      <section className="pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-6 sm:pb-8 md:pb-12 px-4 sm:px-6 md:px-8 text-center relative z-10">
+      <section className="py-8 md:py-12 px-2 md:px-8 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-2 sm:mb-3 md:mb-6">
-            Resume  <span className="text-blue-400">Transformation</span>
+          <h1 className="text-3xl md:text-6xl  text-white leading-tight mb-2 md:mb-6">
+            Crafted for <span className="text-blue-400">Success</span>
           </h1>
           
-          <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-100 leading-relaxed mb-6 sm:mb-8 md:mb-4 px-2">
-            A structured 4-week program designed for professionals who demand 
+          <p className="text-base md:text-2xl text-gray-100 leading-relaxed mb-8 md:mb-4">
+            A structured 5-week program designed for professionals who demand 
             excellence and measurable results in their career advancement.
           </p>
         </div>
       </section>
 
-      <section ref={containerRef} className="py-6 sm:py-8 md:py-2 px-4 sm:px-6 md:px-8 relative">
+      <section ref={containerRef} className="py-8 md:py-2 px-4 md:px-8 relative">
         <div className="flex justify-center w-full">
-          <div ref={timelineRef} className="relative w-full max-w-6xl" style={{ minHeight: `${timelineHeight + (isMobile ? 100 : 200)}px` }}>
+          <div ref={timelineRef} className="relative w-full max-w-6xl" style={{ minHeight: `${timelineHeight + 200}px` }}>
 
             <ProgressiveLine 
               progress={lineProgress} 
