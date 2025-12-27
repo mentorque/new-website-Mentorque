@@ -388,7 +388,7 @@ const ProgressiveTimeline: React.FC = () => {
           </h1>
           
           <p className="text-base md:text-2xl text-gray-100 leading-relaxed mb-8 md:mb-4">
-            A structured 5-week program designed for professionals who demand 
+            A structured 5-6 week program designed for professionals who demand 
             excellence and measurable results in their career advancement.
           </p>
         </div>
