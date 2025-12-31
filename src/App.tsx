@@ -15,6 +15,7 @@ import MockInterview from '@/pages/MockInterview';
 import Structure from './pages/Structure';
 import SuccessStories from './pages/SuccessStories';
 import Testimonials from './pages/Testimonials';
+import Team from './pages/Team';
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const App = () => (
           <Route path="/cheat-sheet-prep" element={<CheatSheetPrep />} />
           <Route path="/mock-interviews" element={<MockInterview />} />
           <Route path="/structure" element={<Structure />} />
+          <Route path="/team" element={<Team />} />
           <Route path="/success-stories" element={<SuccessStories />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/testimonial" element={<Testimonials />} />
