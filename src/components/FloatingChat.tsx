@@ -201,7 +201,7 @@ export default function FloatingChat() {
           bg-gradient-to-br from-neutral-800 to-black backdrop-blur-2xl 
           border border-neutral-700/40 text-white 
           shadow-2xl shadow-black/40 
-          transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] 
+          transition-all duration-400
           flex items-center justify-center group ${
             /* your dynamic classes go here */
           isOpen 
@@ -210,7 +210,8 @@ export default function FloatingChat() {
         }`}
         aria-label="Open chat"
         style={{
-          animation: isOpen ? 'none' : 'pulseGlow 2.5s ease-in-out infinite'
+          animation: isOpen ? 'none' : 'pulseGlow 2.5s ease-in-out infinite',
+          transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
         }}
       >
         <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 group-hover:scale-110 transition-transform duration-300" />
@@ -219,13 +220,14 @@ export default function FloatingChat() {
 
       {/* Chat Widget */}
       <div
-        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-[90vw] sm:w-[85vw] max-w-[320px] transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-[90vw] sm:w-[85vw] max-w-[320px] transition-all duration-400 ${
           isOpen 
             ? 'opacity-100 translate-y-0 scale-100 rotate-0' 
             : 'opacity-0 translate-y-6 scale-95 rotate-2 pointer-events-none'
         }`}
         style={{
-          transformOrigin: 'bottom right'
+          transformOrigin: 'bottom right',
+          transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
         }}
       >
         <div className="bg-gradient-to-br from-white/95 via-blue-50/90 to-indigo-50/95 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-blue-200/30 border border-blue-200/40 overflow-hidden relative">

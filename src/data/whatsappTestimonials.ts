@@ -22,7 +22,8 @@ const testimonialAssetModules = import.meta.glob<
   string,
   string
 >("/public/Whatsapp_testimonial_screenshots/*.{png,jpg,jpeg,webp}", {
-  as: "url",
+  query: '?url',
+  import: 'default',
   eager: true,
 })
 
