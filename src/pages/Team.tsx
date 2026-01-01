@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { Linkedin, GraduationCap, Briefcase } from "lucide-react";
+import { Linkedin } from "lucide-react";
 
 interface TeamMember {
   id: string;
@@ -50,7 +50,7 @@ const teamMembers: TeamMember[] = [
   {
     id: "nyai",
     name: "Nyai",
-    role: "Lead UI/UX and Marketing",
+    role: "Leads UI/UX and Marketing",
     photo: "/Team Pics/Nyai.jpg",
     collegeImage: "/Team Colleges/Pearl Academy (Nyai).jpg",
     companyImage: "/Team Companies/Myntra (Nyai).png",
@@ -95,6 +95,17 @@ const quotes = [
   "Empowering the next generation of professionals.",
 ];
 
+// College full name mappings
+const collegeFullNames: Record<string, string> = {
+  "UCC": "University College Cork",
+  "IIT Banaras": "IIT Banaras",
+  "IIT Kharagpur": "IIT Kharagpur",
+  "Pearl Academy": "Pearl Academy",
+  "Alison Learnings": "Alison Learnings",
+  "UCD": "University College Dublin",
+  "Dayananda Sagar": "Dayananda Sagar College of Engineering",
+};
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -117,17 +128,15 @@ const itemVariants = {
   },
 };
 
-const TeamMemberCard = ({ member, index }: { member: TeamMember; index: number }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
+const TeamMemberCard = ({ member, index, size = "normal" }: { member: TeamMember; index: number; size?: "normal" | "large" }) => {
+  const isLarge = size === "large";
+  
   return (
     <motion.div
       variants={itemVariants}
-      className="relative group"
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      className="relative group h-full"
     >
-      <div className="relative w-full aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border-2 border-gray-800 shadow-2xl group-hover:border-blue-500/50 group-hover:shadow-blue-500/20 transition-all duration-500">
+      <div className={`relative w-full aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-800/50 shadow-2xl group-hover:border-blue-500/50 group-hover:shadow-blue-500/20 transition-all duration-500`} style={{ transform: 'scale(0.75)', transformOrigin: 'center' }}>
         {/* Primary Photo */}
         <div className="absolute inset-0">
           <img
@@ -143,78 +152,27 @@ const TeamMemberCard = ({ member, index }: { member: TeamMember; index: number }
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         </div>
 
-        {/* College and Company Badges - visible on hover */}
-        <motion.div
-          className="absolute top-12 left-0 right-0 flex items-center justify-center gap-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 px-4 pb-32"
-          initial={false}
-          animate={{
-            opacity: isHovered ? 1 : 0,
-            y: isHovered ? 0 : 20,
-          }}
-          transition={{ duration: 0.4 }}
-        >
-          {/* College Badge */}
-          <div className="relative group/badge">
-            <div className="bg-black/95 backdrop-blur-sm px-5 py-4 rounded-2xl border-2 border-white/30 shadow-2xl transform group-hover/badge:scale-105 transition-all duration-300 hover:border-white/50 min-w-[180px]">
-              <div className="flex flex-col items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg">
-                    <GraduationCap size={16} className="text-white" />
-                  </div>
-                  <span className="text-white text-xs font-bold uppercase tracking-wide">College</span>
-                </div>
-                <div className="w-28 h-28 relative bg-white rounded-lg p-3 shadow-md border border-gray-200 flex items-center justify-center">
-                  <img
-                    src={member.collegeImage}
-                    alt={`${member.name} - ${member.collegeName}`}
-                    className="max-w-full max-h-full object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "/placeholder.svg";
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Company Badge */}
-          <div className="relative group/badge">
-            <div className="bg-black/95 backdrop-blur-sm px-5 py-4 rounded-2xl border-2 border-white/30 shadow-2xl transform group-hover/badge:scale-105 transition-all duration-300 hover:border-white/50 min-w-[180px]">
-              <div className="flex flex-col items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg">
-                    <Briefcase size={16} className="text-white" />
-                  </div>
-                  <span className="text-white text-xs font-bold uppercase tracking-wide">Company</span>
-                </div>
-                <div className="w-28 h-28 relative bg-white rounded-lg p-3 shadow-md border border-gray-200 flex items-center justify-center">
-                  <img
-                    src={member.companyImage}
-                    alt={`${member.name} - ${member.companyName}`}
-                    className="max-w-full max-h-full object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "/placeholder.svg";
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Name and Role - Always visible at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 z-20">
-          <div className="bg-gradient-to-r from-black/95 to-black/90 rounded-2xl p-5 border-2 border-white/20 shadow-xl">
-            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 tracking-tight">{member.name}</h3>
-            <p className="text-gray-300 text-sm font-medium uppercase tracking-wider mb-3">{member.role}</p>
+        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 z-20">
+          <div className="bg-gradient-to-r from-black/95 to-black/90 rounded-2xl p-4 sm:p-5 border border-white/10 shadow-xl backdrop-blur-sm">
+            <h3 className={`${isLarge ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'} font-bold text-white mb-1.5 tracking-tight`}>{member.name}</h3>
+            <div className="flex items-center gap-2.5 mb-2.5 flex-wrap">
+              <p className="text-gray-300 text-base sm:text-lg font-medium uppercase tracking-wider">{member.role}</p>
+              {member.collegeName && (
+                <>
+                  <span className="text-gray-500 text-base">•</span>
+                  <p className="text-gray-300 text-base sm:text-lg font-medium capitalize tracking-normal">
+                    {collegeFullNames[member.collegeName] || member.collegeName}
+                  </p>
+                </>
+              )}
+            </div>
             {member.linkedinUrl && (
               <a
                 href={member.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 border-2 border-blue-400/50 shadow-lg shadow-blue-500/30 mt-2 transition-all duration-300 hover:scale-110 hover:shadow-blue-500/50"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-blue-600 hover:bg-blue-700 border border-blue-400/30 shadow-lg transition-all duration-300 hover:scale-110"
               >
                 <Linkedin size={18} className="text-white" />
               </a>
@@ -230,14 +188,37 @@ const QuoteCard = ({ quote, index }: { quote: string; index: number }) => {
   return (
     <motion.div
       variants={itemVariants}
-      className="relative h-full min-h-[250px] rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-black border-2 border-gray-700 p-8 sm:p-10 flex items-center justify-center group hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500"
+      className="relative group h-full"
     >
-      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-indigo-600/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
-      <p className="text-white text-lg sm:text-xl lg:text-2xl font-semibold text-center leading-relaxed group-hover:scale-105 transition-transform duration-500 relative z-10 tracking-tight">
-        "{quote}"
-      </p>
-      <div className="absolute top-6 left-6 text-6xl sm:text-7xl text-white/10 font-serif select-none font-bold">"</div>
-      <div className="absolute bottom-6 right-6 text-6xl sm:text-7xl text-white/10 font-serif select-none font-bold">"</div>
+      <div className="relative w-full aspect-square rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-black border border-gray-700/50 shadow-2xl group-hover:border-blue-500/50 group-hover:shadow-blue-500/20 transition-all duration-500 flex items-center justify-center p-8 sm:p-10" style={{ transform: 'scale(0.75)', transformOrigin: 'center' }}>
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-indigo-600/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+        <p className="text-white text-lg sm:text-xl lg:text-2xl font-semibold text-center leading-relaxed group-hover:scale-105 transition-transform duration-500 relative z-10 tracking-tight">
+          "{quote}"
+        </p>
+        <div className="absolute top-6 left-6 text-6xl text-white/10 font-serif select-none font-bold">"</div>
+        <div className="absolute bottom-6 right-6 text-6xl text-white/10 font-serif select-none font-bold">"</div>
+      </div>
+    </motion.div>
+  );
+};
+
+const WideQuoteCard = ({ quote }: { quote: string }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="relative group w-full"
+    >
+      <div className="relative w-full aspect-[3/1] rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-black border border-gray-700/50 shadow-2xl group-hover:border-blue-500/50 group-hover:shadow-blue-500/20 transition-all duration-500 flex items-center justify-center p-8 sm:p-12">
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-indigo-600/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+        <p className="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold text-center leading-relaxed group-hover:scale-105 transition-transform duration-500 relative z-10 tracking-tight px-8">
+          "{quote}"
+        </p>
+        <div className="absolute top-6 left-8 text-7xl text-white/10 font-serif select-none font-bold">"</div>
+        <div className="absolute bottom-6 right-8 text-7xl text-white/10 font-serif select-none font-bold">"</div>
+      </div>
     </motion.div>
   );
 };
@@ -277,25 +258,38 @@ const Team = () => {
   gridItems.push({ type: "quote", data: quotes[1], index: 1 });
   gridItems.push({ type: "member", data: teamMembers[5], index: 5 }); // Anchita
   
-  // Third row: Nyai, Umang, Gokul (all three together - MUST be consecutive)
-  gridItems.push({ type: "member", data: teamMembers[3], index: 3 }); // Nyai - position 7
-  gridItems.push({ type: "member", data: teamMembers[4], index: 4 }); // Umang - position 8
-  gridItems.push({ type: "member", data: teamMembers[6], index: 6 }); // Gokul - position 9
+  // Third row: Nyai, Umang, Gokul (all three together)
+  gridItems.push({ type: "member", data: teamMembers[3], index: 3 }); // Nyai
+  gridItems.push({ type: "member", data: teamMembers[4], index: 4 }); // Umang
+  gridItems.push({ type: "member", data: teamMembers[6], index: 6 }); // Gokul
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0b1120] via-[#05070d] to-[#020204] text-white relative overflow-hidden">
-      {/* Subtle abstract background elements */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        {/* Subtle radial gradients */}
+      {/* Abstract background elements with lines */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Abstract gradient orbs */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
         <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 left-1/2 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl"></div>
         
-        {/* Subtle gradient overlays */}
+        {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-950/10 via-transparent to-purple-950/10"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
         
-        {/* Very subtle noise texture */}
+        {/* Abstract Lines Background - SVG for crisp rendering */}
+        <svg 
+          className="absolute inset-0 w-full h-full pointer-events-none" 
+          viewBox="0 0 100 100" 
+          preserveAspectRatio="none" 
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ opacity: 0.3 }}
+        >
+          {/* 2 thick abstract lines */}
+          <path d="M0,40 Q25,35 50,40 T100,40" stroke="rgba(59, 130, 246, 0.5)" strokeWidth="1.5" fill="none" />
+          <line x1="0" y1="0" x2="100" y2="100" stroke="rgba(139, 92, 246, 0.4)" strokeWidth="1.2" />
+        </svg>
+        
+        {/* Noise texture */}
         <div 
           className="absolute inset-0 opacity-[0.02]" 
           style={{
@@ -307,19 +301,19 @@ const Team = () => {
       </div>
       
       <Navbar />
-      <main className="pt-24 sm:pt-28 lg:pt-32 pb-20 relative z-10">
+      <main className="pt-24 pb-16 relative z-10">
         {/* Hero Section */}
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-20">
+        <section className="container mx-auto px-2 sm:px-4 lg:px-6 mb-8">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto"
+            className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
               Team of Dreamers, Doers, and Everything in Between
             </h1>
-            <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-300 max-w-xl mx-auto leading-relaxed">
               Meet the brilliant minds behind Mentorque. From prestigious colleges to leading companies, 
               we bring diverse expertise to transform your career journey.
             </p>
@@ -327,70 +321,30 @@ const Team = () => {
         </section>
 
         {/* Team Grid */}
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* First two rows */}
+        <section className="container mx-auto px-0 sm:px-1 lg:px-2">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto mb-6 sm:mb-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0"
           >
-            {gridItems.slice(0, 6).map((item, idx) => {
-              return (
-                <div 
-                  key={`${item.type}-${idx}`} 
-                  className="w-full"
-                >
-                  {item.type === "member" ? (
-                    <TeamMemberCard member={item.data as TeamMember} index={idx} />
-                  ) : (
-                    <div className="h-full min-h-[300px] sm:min-h-[350px]">
-                      <QuoteCard quote={item.data as string} index={idx} />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </motion.div>
-
-          {/* Third row: Nyai, Umang, Gokul - explicitly together */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto"
-          >
-            {gridItems.slice(6, 9).map((item, idx) => {
-              const actualIdx = idx + 6;
-              return (
-                <div 
-                  key={`${item.type}-${actualIdx}`} 
-                  className="w-full"
-                >
-                  {item.type === "member" ? (
-                    <TeamMemberCard member={item.data as TeamMember} index={actualIdx} />
-                  ) : (
-                    <div className="h-full min-h-[300px] sm:min-h-[350px]">
-                      <QuoteCard quote={item.data as string} index={actualIdx} />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+            {gridItems.map((item, idx) => (
+              <div key={`${item.type}-${idx}`} className="w-full -m-4">
+                {item.type === "member" ? (
+                  <TeamMemberCard member={item.data as TeamMember} index={idx} />
+                ) : (
+                  <QuoteCard quote={item.data as string} index={idx} />
+                )}
+              </div>
+            ))}
           </motion.div>
         </section>
 
         {/* Additional Quote Section */}
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto"
-          >
-            <QuoteCard quote={quotes[2]} index={2} />
-          </motion.div>
+        <section className="container mx-auto px-2 sm:px-4 lg:px-6 mt-8">
+          <div className="max-w-5xl mx-auto">
+            <WideQuoteCard quote={quotes[2]} />
+          </div>
         </section>
       </main>
       <Footer />
